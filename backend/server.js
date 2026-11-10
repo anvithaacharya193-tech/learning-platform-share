@@ -136,11 +136,13 @@ app.post("/api/login", async (req, res) => {
     const sql = "SELECT * FROM users WHERE username = ?";
 
     db.query(sql, [username], async (error, results) => {
-        if (error) {
-            return res.status(500).json({
-                message: "Server error"
-            });
-        }
+     if (error) {
+    console.error("Login database error:", error);
+
+    return res.status(500).json({
+        message: "Server error"
+    });
+}
 
         if (results.length === 0) {
             return res.status(401).json({
