@@ -1066,6 +1066,10 @@ app.get(
         );
     }
 );
+// Serve frontend files
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+// Start backend server
 app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
+    console.log(`Backend server running on port ${PORT}`);
 });
