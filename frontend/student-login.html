@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Login</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #dff6ff,
+                #f3e8ff
+            );
+
+            min-height: 100vh;
+
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+
+            width: 350px;
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #243b64;
+
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 90%;
+
+            padding: 12px;
+
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+
+            border-color: #45a77b;
+        }
+
+        button {
+            width: 90%;
+
+            margin-top: 20px;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #45a77b;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        #message {
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+    <h1>👨‍🎓 Student Login</h1>
+
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter Username"
+    >
+
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+    >
+
+
+    <button onclick="studentLogin()">
+
+        Login
+
+    </button>
+
+
+    <div id="message"></div>
+
+</div>
+
+
+
+<script>
+
+function studentLogin() {
+
+    const username =
+        document.getElementById("username")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+    const message =
+        document.getElementById("message");
+
+
+    // =========================
+    // CHECK EMPTY FIELDS
+    // =========================
+
+    if (username === "" || password === "") {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "⚠️ Please enter username and password.";
+
+        return;
+    }
+
+
+    // =========================
+    // GET SAVED ACCOUNTS
+    // =========================
+
+    const accounts =
+        JSON.parse(
+            localStorage.getItem("accounts")
+        ) || [];
+
+
+    // =========================
+    // FIND STUDENT ACCOUNT
+    // =========================
+
+    const account =
+        accounts.find(function(user) {
+
+            return (
+                user.username === username &&
+                user.password === password &&
+                user.role === "student"
+            );
+
+        });
+
+
+    // =========================
+    // INVALID STUDENT LOGIN
+    // =========================
+
+    if (!account) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "❌ Invalid student username or password.";
+
+        return;
+    }
+
+
+    // =========================
+    // SAVE STUDENT SESSION
+    // =========================
+
+    sessionStorage.setItem(
+        "studentLoggedIn",
+        "true"
+    );
+
+    sessionStorage.setItem(
+        "studentUsername",
+        account.username
+    );
+
+    sessionStorage.setItem(
+        "loggedInUsername",
+        account.username
+    );
+
+    sessionStorage.setItem(
+        "loggedInRole",
+        "student"
+    );
+
+
+    // Save age if it exists.
+    // Student does NOT need to select age again.
+
+    if (account.age) {
+
+        sessionStorage.setItem(
+            "selectedAge",
+            account.age
+        );
+
+    }
+
+
+    // =========================
+    // GO DIRECTLY TO
+    // LEARNING ACTIVITIES
+    // =========================
+
+    window.location.href =
+        "learning-activities.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>

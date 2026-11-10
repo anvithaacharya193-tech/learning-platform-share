@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Student Progress</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dff6ff,
+            #f3e8ff
+        );
+
+    min-height: 100vh;
+
+    padding: 30px;
+}
+
+.container {
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+/* ==============================
+   ANIMATION
+============================== */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes float {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+}
+
+/* ==============================
+   HEADER
+============================== */
+
+h1 {
+
+    text-align: center;
+
+    color: #243b64;
+
+    animation: float 3s infinite;
+}
+
+.student-name {
+
+    text-align: center;
+
+    color: #45a77b;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    margin-bottom: 25px;
+}
+
+/* ==============================
+   CARD
+============================== */
+
+.card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
+
+    animation: fadeIn 0.6s ease;
+}
+
+h2 {
+
+    color: #243b64;
+
+    margin-top: 0;
+}
+
+/* ==============================
+   PROGRESS GRID
+============================== */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(200px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.progress-card {
+
+    background: #f5f8ff;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+.progress-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.1);
+}
+
+.icon {
+
+    font-size: 40px;
+
+    margin-bottom: 10px;
+}
+
+.value {
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    color: #45a77b;
+}
+
+.label {
+
+    color: #555;
+
+    margin-top: 8px;
+}
+
+/* ==============================
+   BADGE
+============================== */
+
+.badge {
+
+    text-align: center;
+
+    font-size: 70px;
+
+    margin: 15px;
+}
+
+.badge-name {
+
+    text-align: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #7b4bdc;
+}
+
+/* ==============================
+   BUTTON
+============================== */
+
+button {
+
+    display: block;
+
+    margin: 20px auto 0;
+
+    background: #243b64;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 13px 25px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,0.15);
+}
+
+.no-progress {
+
+    text-align: center;
+
+    color: #777;
+
+    padding: 30px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>📊 Student Progress</h1>
+
+<div
+    class="student-name"
+    id="studentName">
+</div>
+
+
+<div
+    class="card"
+    id="progressCard">
+
+<h2>📚 Learning Progress</h2>
+
+<div
+    class="grid"
+    id="progressGrid">
+</div>
+
+</div>
+
+
+<!-- ==============================
+     BADGE
+============================== -->
+
+<div class="card">
+
+<h2>🏅 Badge</h2>
+
+<div
+    class="badge"
+    id="badgeIcon">
+📘
+</div>
+
+<div
+    class="badge-name"
+    id="badgeName">
+Keep Learning
+</div>
+
+</div>
+
+
+<button
+    onclick="goBack()">
+
+← Back
+
+</button>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GET STUDENT
+===================================================== */
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const student =
+    params.get("student") ||
+    sessionStorage.getItem(
+        "loggedInUsername"
+    );
+
+
+/* =====================================================
+   SHOW STUDENT
+===================================================== */
+
+document.getElementById(
+    "studentName"
+).textContent =
+
+    student
+        ? "Student: " + student
+        : "Student";
+
+
+/* =====================================================
+   LOAD PROGRESS
+===================================================== */
+async function loadProgress() {
+
+    const grid =
+        document.getElementById(
+            "progressGrid"
+        );
+
+    grid.innerHTML = `
+        <div class="no-progress">
+            Loading student progress...
+        </div>
+    `;
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/progress/" +
+                encodeURIComponent(student)
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load progress"
+            );
+        }
+
+        const progress =
+            await response.json();
+
+document.getElementById(
+    "studentName"
+).textContent =
+    "Student: " +
+    student +
+    " | Age: " +
+    (
+        progress.age ||
+        "Not available"
+    );
+        /*
+           Check whether any progress
+           has actually been recorded.
+        */
+
+        const hasProgress =
+            Number(progress.activities_completed) > 0 ||
+            Number(progress.quiz_score) > 0 ||
+            Number(progress.last_quiz_score) > 0 ||
+            Number(progress.streak) > 0 ||
+            progress.badge !== "";
+
+
+        if (!hasProgress) {
+
+            grid.innerHTML = `
+
+                <div class="no-progress">
+
+                    📚 No progress available yet.
+
+                    <br><br>
+
+                    Complete the teacher's activities
+                    and quiz to see progress.
+
+                </div>
+
+            `;
+
+            document.getElementById(
+                "badgeName"
+            ).textContent =
+                "Keep Learning";
+
+            document.getElementById(
+                "badgeIcon"
+            ).textContent =
+                "📘";
+
+            return;
+        }
+
+const activities =
+    Number(
+        progress.activities_completed
+    ) || 0;
+
+
+const streak =
+    Number(
+        progress.streak
+    ) || 0;
+
+/* Get latest quiz result from MySQL */
+
+let latestQuizResult = null;
+
+try {
+
+    const quizResponse =
+        await fetch(
+            "http://localhost:3000/api/quiz-results/" +
+            encodeURIComponent(student)
+        );
+
+    if (quizResponse.ok) {
+
+        const quizResults =
+            await quizResponse.json();
+
+        if (
+            Array.isArray(quizResults) &&
+            quizResults.length > 0
+        ) {
+
+            latestQuizResult =
+                quizResults[0];
+
+        }
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Quiz result loading error:",
+        error
+    );
+
+}
+
+
+/* Quiz marks */
+
+const marks =
+    latestQuizResult
+        ? Number(latestQuizResult.score)
+        : 0;
+
+
+/* Total questions */
+
+const total =
+    latestQuizResult
+        ? Number(latestQuizResult.total)
+        : 0;
+
+
+/* Quiz percentage */
+
+const percentage =
+    latestQuizResult
+        ? Number(latestQuizResult.percentage)
+        : 0;
+        grid.innerHTML = `
+
+            <div class="progress-card">
+
+                <div class="icon">
+                    📝
+                </div>
+
+                <div class="value">
+                    ${activities}
+                </div>
+
+                <div class="label">
+                    Activities Completed
+                </div>
+
+            </div>
+
+
+            <div class="progress-card">
+
+                <div class="icon">
+                    🎯
+                </div>
+
+                <div class="value">
+
+                    ${marks} / ${total}
+
+                </div>
+
+                <div class="label">
+                    Quiz Marks
+                </div>
+
+            </div>
+
+
+            <div class="progress-card">
+
+                <div class="icon">
+                    📈
+                </div>
+
+                <div class="value">
+
+                    ${percentage}%
+
+                </div>
+
+                <div class="label">
+                    Quiz Percentage
+                </div>
+
+            </div>
+
+
+            <div class="progress-card">
+
+                <div class="icon">
+                    🔥
+                </div>
+
+                <div class="value">
+
+                    ${streak}
+
+                </div>
+
+                <div class="label">
+                    Study Streak
+                </div>
+
+            </div>
+
+        `;
+
+
+        /* ==============================
+           BADGE
+        ============================== */
+
+        document.getElementById(
+            "badgeName"
+        ).textContent =
+
+            progress.badge ||
+            "Keep Learning";
+
+
+        if (percentage >= 80) {
+
+            document.getElementById(
+                "badgeIcon"
+            ).textContent =
+                "🏆";
+
+        } else if (percentage >= 60) {
+
+            document.getElementById(
+                "badgeIcon"
+            ).textContent =
+                "🥇";
+
+        } else if (percentage >= 40) {
+
+            document.getElementById(
+                "badgeIcon"
+            ).textContent =
+                "🥈";
+
+        } else {
+
+            document.getElementById(
+                "badgeIcon"
+            ).textContent =
+                "📘";
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Progress loading error:",
+            error
+        );
+
+        grid.innerHTML = `
+
+            <div class="no-progress">
+
+                ❌ Cannot load progress.
+
+                <br><br>
+
+                Please make sure the backend
+                server is running.
+
+            </div>
+
+        `;
+    }
+}
+/* =====================================================
+   BACK
+===================================================== */
+
+function goBack() {
+
+    if (
+        sessionStorage.getItem(
+            "loggedInRole"
+        ) === "teacher"
+    ) {
+
+        window.location.href =
+            "teacher-dashboard.html";
+
+    } else {
+
+        window.location.href =
+            "learning-activities.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+window.onload =
+    loadProgress;
+
+</script>
+
+</body>
+
+</html>

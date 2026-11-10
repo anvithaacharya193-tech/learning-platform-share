@@ -1,0 +1,1129 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Create Account</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dff6ff,
+            #f3e8ff
+        );
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   BACKGROUND CIRCLES
+========================= */
+
+.circle {
+
+    position: fixed;
+
+    border-radius: 50%;
+
+    opacity: 0.35;
+
+    animation:
+        float 6s ease-in-out infinite;
+}
+
+
+.circle1 {
+
+    width: 180px;
+
+    height: 180px;
+
+    background: #9bdcff;
+
+    top: 8%;
+
+    left: 8%;
+}
+
+
+.circle2 {
+
+    width: 140px;
+
+    height: 140px;
+
+    background: #d5a7ff;
+
+    bottom: 10%;
+
+    right: 10%;
+
+    animation-delay: 2s;
+}
+
+
+@keyframes float {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-25px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================
+   MAIN BOX
+========================= */
+
+.container {
+
+    width: 850px;
+
+    max-width: 92%;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 35px;
+
+    display: flex;
+
+    gap: 40px;
+
+    align-items: center;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.18);
+
+    animation:
+        appear 0.9s ease;
+}
+
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(60px)
+            scale(0.9);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+
+/* =========================
+   MAN SECTION
+========================= */
+
+.person-section {
+
+    width: 40%;
+
+    text-align: center;
+}
+
+
+.person-section h2 {
+
+    color: #243b64;
+
+    margin-bottom: 25px;
+}
+
+
+.man {
+
+    position: relative;
+
+    width: 180px;
+
+    height: 260px;
+
+    margin: auto;
+
+    animation:
+        manFloat 3s ease-in-out infinite;
+}
+
+
+@keyframes manFloat {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* HEAD */
+
+.head {
+
+    position: absolute;
+
+    width: 90px;
+
+    height: 100px;
+
+    background: #f2c6a0;
+
+    border-radius: 50%;
+
+    top: 20px;
+
+    left: 45px;
+
+    z-index: 2;
+}
+
+
+/* HAIR */
+
+.hair {
+
+    position: absolute;
+
+    width: 90px;
+
+    height: 45px;
+
+    background: #333;
+
+    border-radius:
+        50% 50% 25% 25%;
+
+    top: 15px;
+
+    left: 45px;
+
+    z-index: 3;
+}
+
+
+/* EYES */
+
+.eye {
+
+    position: absolute;
+
+    width: 8px;
+
+    height: 8px;
+
+    background: #222;
+
+    border-radius: 50%;
+
+    top: 60px;
+
+    z-index: 4;
+}
+
+
+.eye-left {
+
+    left: 67px;
+
+}
+
+
+.eye-right {
+
+    left: 105px;
+
+}
+
+
+/* BODY */
+
+.body-man {
+
+    position: absolute;
+
+    width: 125px;
+
+    height: 120px;
+
+    background: #4f6fdc;
+
+    border-radius:
+        35px 35px 15px 15px;
+
+    top: 110px;
+
+    left: 27px;
+}
+
+
+/* LEFT ARM */
+
+.arm-left {
+
+    position: absolute;
+
+    width: 35px;
+
+    height: 105px;
+
+    background: #f2c6a0;
+
+    border-radius: 25px;
+
+    top: 115px;
+
+    left: 8px;
+
+    transform:
+        rotate(12deg);
+
+    transform-origin: top;
+
+    animation:
+        wave 2s ease-in-out infinite;
+}
+
+
+@keyframes wave {
+
+    0% {
+        transform: rotate(12deg);
+    }
+
+    50% {
+        transform: rotate(-18deg);
+    }
+
+    100% {
+        transform: rotate(12deg);
+    }
+
+}
+
+
+/* RIGHT ARM */
+
+.arm-right {
+
+    position: absolute;
+
+    width: 35px;
+
+    height: 105px;
+
+    background: #f2c6a0;
+
+    border-radius: 25px;
+
+    top: 115px;
+
+    right: 8px;
+
+    transform:
+        rotate(-12deg);
+}
+
+
+/* LEGS */
+
+.leg-left,
+.leg-right {
+
+    position: absolute;
+
+    width: 40px;
+
+    height: 75px;
+
+    background: #243b64;
+
+    top: 220px;
+
+    border-radius:
+        0 0 15px 15px;
+}
+
+
+.leg-left {
+
+    left: 48px;
+
+}
+
+
+.leg-right {
+
+    right: 48px;
+
+}
+
+
+.person-text {
+
+    color: #666;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form-section {
+
+    width: 60%;
+}
+
+
+h1 {
+
+    color: #243b64;
+
+    margin-top: 0;
+
+    font-size: 30px;
+}
+
+
+.subtitle {
+
+    color: #666;
+
+    margin-bottom: 20px;
+}
+
+
+input,
+select {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 8px 0;
+
+    border:
+        2px solid #ddd;
+
+    border-radius: 11px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+
+input:focus,
+select:focus {
+
+    border-color: #4f6fdc;
+
+    box-shadow:
+        0 0 10px
+        rgba(79,111,220,0.2);
+
+    transform:
+        scale(1.01);
+}
+
+
+/* =========================
+   AGE SECTION
+========================= */
+
+#ageSection {
+
+    display: none;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 12px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+
+button:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,0.18);
+}
+
+
+.create-button {
+
+    background: #45a77b;
+
+    color: white;
+}
+
+
+.back-button {
+
+    background: #4f6fdc;
+
+    color: white;
+}
+
+
+#message {
+
+    min-height: 20px;
+
+    font-weight: bold;
+
+    text-align: center;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .container {
+
+        flex-direction: column;
+
+        padding: 25px;
+    }
+
+
+    .person-section,
+    .form-section {
+
+        width: 100%;
+    }
+
+
+    .person-section {
+
+        display: none;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="circle circle1"></div>
+
+<div class="circle circle2"></div>
+
+
+<div class="container">
+
+
+<!-- =========================
+     ANIMATED MAN
+========================= -->
+
+<div class="person-section">
+
+    <h2>
+
+        👋 Welcome!
+
+    </h2>
+
+
+    <div class="man">
+
+        <div class="hair"></div>
+
+        <div class="head"></div>
+
+        <div class="eye eye-left"></div>
+
+        <div class="eye eye-right"></div>
+
+        <div class="body-man"></div>
+
+        <div class="arm-left"></div>
+
+        <div class="arm-right"></div>
+
+        <div class="leg-left"></div>
+
+        <div class="leg-right"></div>
+
+    </div>
+
+
+    <p class="person-text">
+
+        Create your account and
+        start your learning journey.
+
+    </p>
+
+</div>
+
+
+<!-- =========================
+     CREATE ACCOUNT FORM
+========================= -->
+
+<div class="form-section">
+
+
+<h1>
+
+    Create Account
+
+</h1>
+
+
+<p class="subtitle">
+
+    Register a new account
+
+</p>
+
+
+<input
+    type="text"
+    id="name"
+    placeholder="Enter Full Name">
+
+
+<input
+    type="email"
+    id="email"
+    placeholder="Enter Email Address">
+
+
+<input
+    type="text"
+    id="username"
+    placeholder="Create Username">
+
+
+<input
+    type="password"
+    id="password"
+    placeholder="Create Password">
+
+
+<input
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm Password">
+
+
+<!-- ACCOUNT TYPE -->
+
+<select
+    id="role"
+    onchange="showAge()">
+
+    <option value="">
+
+        Select Account Type
+
+    </option>
+
+
+    <option value="student">
+
+        👨‍🎓 Student
+
+    </option>
+
+
+    <option value="teacher">
+
+        👩‍🏫 Teacher
+
+    </option>
+
+</select>
+
+
+<!-- STUDENT AGE -->
+
+<div id="ageSection">
+
+    <select id="age">
+
+        <option value="">
+
+            Select Student Age
+
+        </option>
+
+
+        <option value="5-7">
+
+            Age 5 - 7
+
+        </option>
+
+
+        <option value="8-10">
+
+            Age 8 - 10
+
+        </option>
+
+
+        <option value="11-13">
+
+            Age 11 - 13
+
+        </option>
+
+
+        <option value="14-16">
+
+            Age 14 - 16
+
+        </option>
+
+
+        <option value="17-18">
+
+            Age 17 - 18
+
+        </option>
+
+    </select>
+
+</div>
+
+
+<!-- CREATE ACCOUNT BUTTON -->
+
+<button
+    class="create-button"
+    onclick="createAccount()">
+
+    Create Account
+
+</button>
+
+
+<!-- BACK BUTTON -->
+
+<button
+    class="back-button"
+    onclick="goBack()">
+
+    ← Back to Sign In
+
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   SHOW / HIDE AGE
+========================= */
+
+function showAge() {
+
+    const role =
+        document.getElementById("role").value;
+
+
+    const ageSection =
+        document.getElementById("ageSection");
+
+
+    if (role === "student") {
+
+        ageSection.style.display = "block";
+
+    }
+
+    else {
+
+        ageSection.style.display = "none";
+
+        document.getElementById("age").value = "";
+
+    }
+
+}
+
+
+/* =========================
+   CREATE ACCOUNT
+========================= */
+
+async function createAccount() {
+
+
+    const name =
+        document
+        .getElementById("name")
+        .value
+        .trim();
+
+
+    const email =
+        document
+        .getElementById("email")
+        .value
+        .trim();
+
+
+    const username =
+        document
+        .getElementById("username")
+        .value
+        .trim();
+
+
+    const password =
+        document
+        .getElementById("password")
+        .value;
+
+
+    const confirmPassword =
+        document
+        .getElementById("confirmPassword")
+        .value;
+
+
+    const role =
+        document
+        .getElementById("role")
+        .value;
+
+
+    const age =
+        document
+        .getElementById("age")
+        .value;
+
+
+    const message =
+        document
+        .getElementById("message");
+
+
+    /* CHECK REQUIRED FIELDS */
+
+    if (
+
+        name === "" ||
+
+        email === "" ||
+
+        username === "" ||
+
+        password === "" ||
+
+        confirmPassword === "" ||
+
+        role === ""
+
+    ) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "⚠️ Please fill in all required fields.";
+
+        return;
+
+    }
+
+
+    /* STUDENT MUST SELECT AGE */
+
+    if (
+
+        role === "student" &&
+        age === ""
+
+    ) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "⚠️ Please select the student's age.";
+
+        return;
+
+    }
+
+
+    /* CHECK EMAIL */
+
+    const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (!emailPattern.test(email)) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "⚠️ Please enter a valid email address.";
+
+        return;
+
+    }
+
+
+    /* CHECK PASSWORD */
+
+    if (password.length < 6) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "⚠️ Password must contain at least 6 characters.";
+
+        return;
+
+    }
+
+
+    /* CHECK PASSWORD MATCH */
+
+    if (password !== confirmPassword) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "❌ Passwords do not match.";
+
+        return;
+
+    }
+/* SEND ACCOUNT TO BACKEND */
+
+const newAccount = {
+    name: name,
+    email: email,
+    username: username,
+    password: password,
+    role: role,
+    age: role === "student" ? age : ""
+};
+
+try {
+
+    const response = await fetch(
+        "http://localhost:3000/api/register",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(newAccount)
+        }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "❌ " + result.message;
+
+        return;
+    }
+
+} catch (error) {
+
+    message.style.color = "red";
+
+    message.innerHTML =
+        "❌ Cannot connect to the backend.";
+
+    return;
+}
+
+
+
+    /* SUCCESS MESSAGE */
+
+    message.style.color = "green";
+
+    message.innerHTML =
+        "✅ Account created successfully!";
+
+
+    /* CLEAR FORM */
+
+    document
+        .getElementById("name")
+        .value = "";
+
+
+    document
+        .getElementById("email")
+        .value = "";
+
+
+    document
+        .getElementById("username")
+        .value = "";
+
+
+    document
+        .getElementById("password")
+        .value = "";
+
+
+    document
+        .getElementById("confirmPassword")
+        .value = "";
+
+
+    document
+        .getElementById("role")
+        .value = "";
+
+
+    document
+        .getElementById("age")
+        .value = "";
+
+
+    document
+        .getElementById("ageSection")
+        .style.display = "none";
+
+
+    /* GO BACK TO SIGN IN */
+
+    setTimeout(function() {
+
+        window.location.href =
+            "index.html";
+
+    }, 1500);
+
+}
+
+
+/* =========================
+   BACK TO SIGN IN
+========================= */
+
+function goBack() {
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+```

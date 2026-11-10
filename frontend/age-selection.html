@@ -1,0 +1,870 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Based Learning</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dff6ff, #f3e8ff);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: white;
+            width: 550px;
+            max-width: 90%;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #243b64;
+        }
+
+        h2 {
+            color: #243b64;
+        }
+
+        p {
+            color: #555;
+            font-size: 18px;
+        }
+
+        button {
+            display: block;
+            width: 80%;
+            margin: 15px auto;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #45a77b;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .activity {
+            background: #f5f8ff;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .activity h2 {
+            color: #243b64;
+        }
+
+        .small-button {
+            width: 60%;
+            background: #4f6fdc;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box" id="content">
+
+    <h1>🎓 Select Your Age</h1>
+
+    <p>Please select your age group.</p>
+
+    <button onclick="selectAge('5-7')">
+        5 - 7 Years
+    </button>
+
+    <button onclick="selectAge('8-10')">
+        8 - 10 Years
+    </button>
+
+    <button onclick="selectAge('11-13')">
+        11 - 13 Years
+    </button>
+
+    <button onclick="selectAge('14+')">
+        14+ Years
+    </button>
+
+</div>
+
+
+<script>
+
+let selectedAge = "";
+let selectedLanguage = "";
+
+let currentQuestion = 0;
+let score = 0;
+
+
+// ===============================
+// AGE SELECTION
+// ===============================
+
+function selectAge(age) {
+
+    selectedAge = age;
+
+    sessionStorage.setItem("selectedAge", age);
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>🌐 Select Your Language</h1>
+
+        <p>
+            Age group selected:
+            <b>${age}</b>
+        </p>
+
+        <button onclick="showActivities('${age}', 'English')">
+            🇬🇧 English
+        </button>
+
+        <button onclick="showActivities('${age}', 'Kannada')">
+            🇮🇳 Kannada
+        </button>
+
+        <button onclick="showActivities('${age}', 'Hindi')">
+            🇮🇳 Hindi
+        </button>
+
+    `;
+}
+
+
+// ===============================
+// ACTIVITIES
+// ===============================
+
+function showActivities(age, language) {
+
+    selectedAge = age;
+    selectedLanguage = language;
+
+    sessionStorage.setItem("selectedAge", age);
+    sessionStorage.setItem("selectedLanguage", language);
+
+    let activities = "";
+
+
+    // AGE 5 - 7
+
+    if (age === "5-7") {
+
+        activities = `
+
+            <div class="activity">
+
+                <h2>🔤 Alphabet Learning</h2>
+
+                <p>
+                    Learn letters using pictures and sounds.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="startActivity('Alphabet Learning')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🎨 Colours</h2>
+
+                <p>
+                    Learn and identify different colours.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="startActivity('Colours')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🔢 Numbers</h2>
+
+                <p>
+                    Learn basic numbers and counting.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="startActivity('Numbers')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🖼️ Picture Matching</h2>
+
+                <p>
+                    Match pictures with the correct objects.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Picture Matching')">
+                    Start
+                </button>
+
+            </div>
+
+        `;
+
+
+    // AGE 8 - 10
+
+    } else if (age === "8-10") {
+
+        activities = `
+
+            <div class="activity">
+
+                <h2>📖 Word Learning</h2>
+
+                <p>
+                    Learn simple words and their meanings.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Word Learning')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>➕ Simple Mathematics</h2>
+
+                <p>
+                    Practice basic addition and subtraction.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Simple Mathematics')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🧠 Memory Game</h2>
+
+                <p>
+                    Improve memory through matching activities.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Memory Game')">
+                    Start
+                </button>
+
+            </div>
+
+        `;
+
+
+    // AGE 11 - 13
+
+    } else if (age === "11-13") {
+
+        activities = `
+
+            <div class="activity">
+
+                <h2>📚 Reading</h2>
+
+                <p>
+                    Practice reading simple sentences.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Reading')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🧮 Problem Solving</h2>
+
+                <p>
+                    Practice simple real-life problems.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Problem Solving')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🧩 Logical Thinking</h2>
+
+                <p>
+                    Complete simple logic and reasoning activities.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Logical Thinking')">
+                    Start
+                </button>
+
+            </div>
+
+        `;
+
+
+    // AGE 14+
+
+    } else {
+
+        activities = `
+
+            <div class="activity">
+
+                <h2>🏠 Daily Life Skills</h2>
+
+                <p>
+                    Practice useful everyday activities.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Daily Life Skills')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>💰 Money Skills</h2>
+
+                <p>
+                    Learn basic money and shopping concepts.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Money Skills')">
+                    Start
+                </button>
+
+            </div>
+
+
+            <div class="activity">
+
+                <h2>🗣️ Communication</h2>
+
+                <p>
+                    Practice everyday communication skills.
+                </p>
+
+                <button
+                    class="small-button"
+                    onclick="completeActivity('Communication')">
+                    Start
+                </button>
+
+            </div>
+
+        `;
+    }
+
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>📚 Learning Activities</h1>
+
+        <p>
+            Age:
+            <b>${age}</b>
+
+            <br>
+
+            Language:
+            <b>${language}</b>
+        </p>
+
+        ${activities}
+
+
+        <div class="activity">
+
+            <h2>📝 Quiz</h2>
+
+            <p>
+                Test what you have learned.
+            </p>
+
+            <button onclick="startQuiz()">
+                Start Quiz
+            </button>
+
+        </div>
+
+    `;
+}
+// ===============================
+// START ACTIVITY
+// ===============================
+
+function startActivity(activityName) {
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>📚 ${activityName}</h1>
+
+        <p>
+            Complete the activity before marking it as finished.
+        </p>
+
+        <div class="activity">
+
+            <h2>Activity Task</h2>
+
+            <p>
+                This is where the student performs the
+                ${activityName} activity.
+            </p>
+
+            <button
+                class="small-button"
+                onclick="completeActivity('${activityName}')">
+                ✅ I Finished the Activity
+            </button>
+
+        </div>
+
+        <button
+            onclick="showActivities(selectedAge, selectedLanguage)">
+            Back to Activities
+        </button>
+
+    `;
+}
+
+// ===============================
+// ACTIVITY COMPLETION
+// ===============================
+
+function completeActivity(activityName) {
+
+    // Mark the current activity as completed
+    if (!window.completedActivities) {
+        window.completedActivities = [];
+    }
+
+    if (!window.completedActivities.includes(activityName)) {
+        window.completedActivities.push(activityName);
+    }
+
+    document.getElementById("content").innerHTML = `
+        <h1>🎉 Activity Completed!</h1>
+
+        <h2>${activityName}</h2>
+
+        <p>
+            Great job! You completed this activity.
+        </p>
+
+        <p class="success">
+            ✅ Activity completed successfully.
+        </p>
+
+        <button onclick="showActivities(selectedAge, selectedLanguage)">
+            Back to Activities
+        </button>
+    `;
+}
+
+
+// ===============================
+// START QUIZ
+// ===============================
+
+function startQuiz() {
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>📝 Quiz</h1>
+
+        <p>
+            Camera permission is required
+            before attending the quiz.
+        </p>
+
+        <button onclick="requestCamera()">
+            📷 Allow Camera & Start
+        </button>
+
+    `;
+}
+
+
+// ===============================
+// CAMERA PERMISSION
+// ===============================
+
+async function requestCamera() {
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+
+        window.cameraStream = stream;
+
+        document.getElementById("content").innerHTML = `
+
+            <h1>📷 Camera Enabled</h1>
+
+            <p class="success">
+                ✅ Camera permission granted.
+            </p>
+
+            <p>
+                You can now attend the quiz.
+            </p>
+
+            <button onclick="showQuiz()">
+                Continue to Quiz
+            </button>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        document.getElementById("content").innerHTML = `
+
+            <h1>⚠️ Quiz Not Started</h1>
+
+            <p class="error">
+                Camera permission was not granted.
+            </p>
+
+            <p>
+                You cannot attend the quiz
+                without camera permission.
+            </p>
+
+            <button onclick="startQuiz()">
+                Try Again
+            </button>
+
+        `;
+    }
+}
+
+
+// ===============================
+// QUIZ QUESTIONS
+// ===============================
+
+const questions = [
+
+    {
+        question: "Which one is an animal?",
+        options: ["Dog", "Book", "Chair"],
+        answer: "Dog"
+    },
+
+    {
+        question: "Which one is a fruit?",
+        options: ["Apple", "Table", "Pen"],
+        answer: "Apple"
+    },
+
+    {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5"],
+        answer: "4"
+    },
+
+    {
+        question: "Which one can you read?",
+        options: ["Book", "Ball", "Cup"],
+        answer: "Book"
+    },
+
+    {
+        question: "Which one is used for writing?",
+        options: ["Pen", "Shoe", "Plate"],
+        answer: "Pen"
+    }
+
+];
+
+
+// ===============================
+// SHOW QUIZ
+// ===============================
+
+function showQuiz() {
+
+    currentQuestion = 0;
+    score = 0;
+
+    displayQuestion();
+}
+
+
+// ===============================
+// DISPLAY QUESTION
+// ===============================
+
+function displayQuestion() {
+
+    let question =
+        questions[currentQuestion];
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>📝 Quiz</h1>
+
+        <p>
+            Question
+            ${currentQuestion + 1}
+            of
+            ${questions.length}
+        </p>
+
+        <h2>
+            ${question.question}
+        </h2>
+
+
+        <button onclick="checkAnswer('${question.options[0]}')">
+            ${question.options[0]}
+        </button>
+
+
+        <button onclick="checkAnswer('${question.options[1]}')">
+            ${question.options[1]}
+        </button>
+
+
+        <button onclick="checkAnswer('${question.options[2]}')">
+            ${question.options[2]}
+        </button>
+
+    `;
+}
+
+
+// ===============================
+// CHECK ANSWER
+// ===============================
+
+function checkAnswer(answer) {
+
+    if (
+        answer ===
+        questions[currentQuestion].answer
+    ) {
+
+        score++;
+
+    }
+
+    currentQuestion++;
+
+    if (
+        currentQuestion <
+        questions.length
+    ) {
+
+        displayQuestion();
+
+    }
+
+    else {
+
+        showResult();
+
+    }
+}
+
+
+// ===============================
+// SHOW FINAL RESULT
+// ===============================
+
+function showResult() {
+
+    let percentage =
+        (score / questions.length) * 100;
+
+    document.getElementById("content").innerHTML = `
+
+        <h1>🎉 Quiz Completed!</h1>
+
+        <h2>
+            Correct Answers:
+            ${score} / ${questions.length}
+        </h2>
+
+        <h2>
+            Score:
+            ${percentage}%
+        </h2>
+
+        <p>
+            Thank you for completing the quiz.
+        </p>
+
+        <button onclick="finishLearning()">
+            Continue
+        </button>
+
+    `;
+
+    stopCamera();
+}
+
+
+// ===============================
+// STOP CAMERA
+// ===============================
+
+function stopCamera() {
+
+    if (window.cameraStream) {
+
+        window.cameraStream
+            .getTracks()
+            .forEach(track => track.stop());
+
+        window.cameraStream = null;
+    }
+}
+
+
+// ===============================
+// FINISH LEARNING
+// ===============================
+function finishLearning() {
+
+    // Save completed activities
+    localStorage.setItem(
+        "completedActivities",
+        JSON.stringify(window.completedActivities || [])
+    );
+
+    // Save quiz score
+    localStorage.setItem(
+        "quizScore",
+        score
+    );
+
+    // Save total questions
+    localStorage.setItem(
+        "totalQuestions",
+        questions.length
+    );
+
+    // Calculate percentage
+    const percentage =
+        (score / questions.length) * 100;
+
+    localStorage.setItem(
+        "quizPercentage",
+        percentage
+    );
+
+    // Initial study streak
+    if (!localStorage.getItem("studyStreak")) {
+        localStorage.setItem("studyStreak", "1");
+    }
+
+    // Open progress page
+    window.location.href = "student-progress.html";
+}
+
+
+
+
+
+// ===============================
+// RESTORE ACTIVITIES
+// ===============================
+
+window.onload = function() {
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const age =
+        urlParams.get("age");
+
+    const language =
+        urlParams.get("language");
+
+    if (age && language) {
+
+        showActivities(age, language);
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
+```

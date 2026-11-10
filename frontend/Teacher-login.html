@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Login</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dff6ff, #f3e8ff);
+            min-height: 100vh;
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            width: 400px;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #243b64;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 90%;
+            padding: 14px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 95%;
+            padding: 14px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #45a77b;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h1>👩‍🏫 Teacher Login</h1>
+
+    <p>Please enter your username and password</p>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter Username"
+    >
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+    >
+
+    <button onclick="teacherLogin()">
+        Login
+    </button>
+
+    <div id="message"></div>
+
+</div>
+
+
+<script>
+
+function teacherLogin() {
+
+    let username =
+        document.getElementById("username").value.trim();
+
+    let password =
+        document.getElementById("password").value.trim();
+
+
+    // Check whether both fields are entered
+
+    if (username === "" || password === "") {
+
+        document.getElementById("message").innerHTML =
+            "⚠️ Please enter username and password.";
+
+        document.getElementById("message").style.color = "red";
+
+        return;
+    }
+
+
+    // Login successful for frontend demonstration
+
+    sessionStorage.setItem("teacherLoggedIn", "true");
+
+    // Open Teacher Dashboard
+
+    window.location.href = "teacher-dashboard.html";
+}
+
+</script>
+
+</body>
+</html>

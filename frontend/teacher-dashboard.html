@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(135deg, #dff6ff, #f3e8ff);
+
+    min-height: 100vh;
+    padding: 30px;
+}
+
+/* ==============================
+   ANIMATION
+============================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ==============================
+   CONTAINER
+============================== */
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #243b64;
+    margin-bottom: 30px;
+
+    animation: float 3s infinite;
+}
+
+/* ==============================
+   CARDS
+============================== */
+
+.card {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
+
+    animation: fadeIn 0.6s ease;
+}
+
+h2 {
+    color: #243b64;
+    margin-top: 0;
+}
+
+h3 {
+    color: #3b5b92;
+}
+
+/* ==============================
+   INPUTS
+============================== */
+
+label {
+    display: block;
+
+    margin-top: 15px;
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+    color: #444;
+}
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: 2px solid #d2dbe8;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+
+    border-color: #4b7bec;
+
+    box-shadow:
+        0 0 8px rgba(75,123,236,0.2);
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+
+button {
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 13px 20px;
+
+    margin-top: 15px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,0.15);
+}
+
+.login-btn {
+    width: 100%;
+    background: #45a77b;
+    color: white;
+}
+
+.progress-btn {
+    background: #4b7bec;
+    color: white;
+}
+
+.activity-btn {
+    background: #7b4bdc;
+    color: white;
+}
+
+.quiz-btn {
+    background: #e67e22;
+    color: white;
+}
+
+.submission-btn {
+    background: #3498db;
+    color: white;
+}
+
+.logout-btn {
+    background: #d9534f;
+    color: white;
+    float: right;
+}
+
+/* ==============================
+   DASHBOARD
+============================== */
+
+.dashboard {
+    display: none;
+}
+
+.selected-student {
+
+    background: #eef5ff;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 20px;
+
+    color: #243b64;
+
+    font-size: 17px;
+}
+
+/* ==============================
+   FORMS
+============================== */
+
+.activity-form,
+.quiz-form,
+.submissions,
+.question-form {
+
+    display: none;
+
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top: 2px solid #eee;
+}
+
+/* ==============================
+   QUIZ QUESTION
+============================== */
+
+.question-box {
+
+    background: #f8fbff;
+
+    border: 2px solid #dce5f0;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-top: 20px;
+
+    animation: fadeIn 0.4s ease;
+}
+
+.question-number {
+
+    font-weight: bold;
+
+    color: #7b4bdc;
+
+    margin-bottom: 10px;
+}
+
+.remove-btn {
+
+    background: #d9534f;
+
+    color: white;
+
+    float: right;
+
+    margin-top: 0;
+}
+
+.add-question-btn {
+
+    background: #45a77b;
+
+    color: white;
+}
+
+.assign-quiz-btn {
+
+    background: #7b4bdc;
+
+    color: white;
+
+    width: 100%;
+
+    font-size: 18px;
+
+    padding: 15px;
+}
+
+/* ==============================
+   SUBMISSIONS
+============================== */
+
+.submission-card {
+
+    background: #f8fbff;
+
+    border: 2px solid #dce5f0;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    margin-bottom: 15px;
+}
+
+.answer-box {
+
+    background: white;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    margin-top: 8px;
+
+    border-left: 4px solid #45a77b;
+
+    white-space: pre-wrap;
+}
+
+.empty {
+
+    text-align: center;
+
+    color: #777;
+
+    padding: 20px;
+}
+
+/* ==============================
+   SUCCESS
+============================== */
+
+.success {
+
+    background: #e8f8ef;
+
+    color: #276749;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    margin-top: 12px;
+
+    display: none;
+
+    animation: pulse 1s;
+}
+
+/* ==============================
+   PROGRESS
+============================== */
+
+.progress-box {
+
+    background: #eef5ff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    margin-top: 20px;
+
+    display: none;
+}
+
+.progress-item {
+
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin: 10px 0;
+
+}
+
+.clearfix::after {
+
+    content: "";
+
+    display: table;
+
+    clear: both;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>👩‍🏫 Teacher Dashboard</h1>
+
+
+<!-- ==============================
+     SELECT STUDENT
+============================== -->
+
+<div class="card" id="studentLoginCard">
+
+<h2>👤 Select Student</h2>
+
+<p>
+Enter the student's username and password.
+</p>
+
+<label>Student Username</label>
+
+<input
+    type="text"
+    id="studentUsername"
+    placeholder="Enter student username"
+>
+
+<label>Student Password</label>
+
+<input
+    type="password"
+    id="studentPassword"
+    placeholder="Enter student password"
+>
+
+<button
+    class="login-btn"
+    onclick="studentLogin()">
+
+View Student
+
+</button>
+
+</div>
+
+
+<!-- ==============================
+     DASHBOARD
+============================== -->
+
+<div
+    class="dashboard"
+    id="dashboard"
+>
+
+<div class="card clearfix">
+
+<button
+    class="logout-btn"
+    onclick="logoutTeacher()">
+
+Logout
+
+</button>
+
+<h2>📚 Student Information</h2>
+
+<div
+    class="selected-student"
+    id="selectedStudent"
+>
+</div>
+
+
+<button
+    class="progress-btn"
+    onclick="viewProgress()">
+
+📊 View Student Progress
+
+</button>
+
+
+<button
+    class="submission-btn"
+    onclick="viewSubmittedWork()">
+
+📝 View Submitted Work
+
+</button>
+<button
+    class="submission-btn"
+    onclick="viewStudentRecording()">
+
+    🎥 View Student Recording
+
+</button>
+
+
+<button
+    class="activity-btn"
+    onclick="showActivityForm()">
+
+➕ Provide New Activity
+
+</button>
+
+
+<button
+    class="quiz-btn"
+    onclick="showQuizForm()">
+
+🧠 Create Teacher Quiz
+
+</button>
+
+
+<!-- ==============================
+     ACTIVITY FORM
+============================== -->
+
+<div
+    class="activity-form"
+    id="activityForm"
+>
+
+<h2>➕ Give New Learning Activity</h2>
+
+<label>Activity Title</label>
+
+<input
+    type="text"
+    id="activityTitle"
+    placeholder="Example: Reading Practice"
+>
+
+<label>Activity / Question</label>
+
+<textarea
+    id="activityDescription"
+    placeholder="Write the activity the student should solve..."
+></textarea>
+
+<button
+    class="activity-btn"
+    onclick="assignActivity()">
+
+📤 Assign Activity
+
+</button>
+
+<div
+    class="success"
+    id="activitySuccess">
+
+Activity assigned successfully! ✅
+
+</div>
+
+</div>
+
+
+<!-- ==============================
+     QUIZ FORM
+============================== -->
+
+<div
+    class="quiz-form"
+    id="quizForm"
+>
+
+<h2>🧠 Create Quiz for Student</h2>
+
+<p>
+Create questions with three options and select the correct answer.
+</p>
+
+<label>Quiz Title</label>
+
+<input
+    type="text"
+    id="quizTitle"
+    placeholder="Example: General Knowledge Quiz"
+>
+
+
+<div id="questionsContainer"></div>
+
+
+<button
+    class="add-question-btn"
+    onclick="addQuestion()">
+
+➕ Add Question
+
+</button>
+
+
+<button
+    class="assign-quiz-btn"
+    onclick="assignQuiz()">
+
+📤 Assign Quiz to Student
+
+</button>
+
+
+<div
+    class="success"
+    id="quizSuccess">
+
+Quiz assigned successfully! 🎉
+
+</div>
+
+</div>
+
+
+<!-- ==============================
+     SUBMITTED WORK
+============================== -->
+
+<div
+    class="submissions"
+    id="submissionsSection"
+>
+
+<h2>📝 Student Submitted Work</h2>
+
+<div
+    id="submissionsContainer"
+>
+</div>
+
+</div>
+
+
+<!-- ==============================
+     PROGRESS
+============================== -->
+
+<div
+    class="progress-box"
+    id="progressBox"
+>
+
+<h2>📊 Student Progress</h2>
+
+<div id="progressContent"></div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let selectedStudentUsername = "";
+
+let questionCount = 0;
+
+
+/* =====================================================
+   STUDENT LOGIN
+===================================================== */
+
+async function studentLogin() {
+
+    const username =
+        document
+        .getElementById("studentUsername")
+        .value
+        .trim();
+
+    const password =
+        document
+        .getElementById("studentPassword")
+        .value
+        .trim();
+
+
+    if (username === "" || password === "") {
+
+        alert(
+            "Please enter both username and password."
+        );
+
+        return;
+    }
+
+
+   /* CHECK STUDENT ACCOUNT USING MYSQL */
+
+try {
+
+    const response = await fetch(
+        "http://localhost:3000/api/login",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+
+        alert(
+            "Student username or password is incorrect."
+        );
+
+        return;
+    }
+
+    if (result.user.role !== "student") {
+
+        alert(
+            "The selected account is not a student account."
+        );
+
+        return;
+    }
+
+} catch (error) {
+
+    console.error(
+        "Student login error:",
+        error
+    );
+
+    alert(
+        "Cannot connect to the backend."
+    );
+
+    return;
+}
+
+    selectedStudentUsername = username;
+
+
+    sessionStorage.setItem(
+        "teacherSelectedStudent",
+        username
+    );
+
+
+    document.getElementById(
+        "studentLoginCard"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "dashboard"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "selectedStudent"
+    ).innerHTML =
+
+        "<strong>Selected Student:</strong> " +
+        escapeHTML(username);
+
+
+    loadTeacherProgress();
+
+}
+
+
+/* =====================================================
+   VIEW PROGRESS
+===================================================== */
+
+function viewProgress() {
+
+    if (!selectedStudentUsername) {
+
+        alert("Please select a student first.");
+
+        return;
+    }
+
+
+    window.location.href =
+        "student-progress.html?student=" +
+        encodeURIComponent(
+            selectedStudentUsername
+        );
+
+}
+
+
+/* =====================================================
+   SHOW ACTIVITY FORM
+===================================================== */
+
+function showActivityForm() {
+
+    document.getElementById(
+        "activityForm"
+    ).style.display = "block";
+
+    document.getElementById(
+        "quizForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "submissionsSection"
+    ).style.display = "none";
+
+}
+
+
+/* =====================================================
+   ASSIGN ACTIVITY
+===================================================== */
+
+async function assignActivity() {
+
+    const title =
+        document
+            .getElementById("activityTitle")
+            .value
+            .trim();
+
+    const description =
+        document
+            .getElementById("activityDescription")
+            .value
+            .trim();
+
+    if (!selectedStudentUsername) {
+
+        alert(
+            "Please select a student first."
+        );
+
+        return;
+    }
+
+    if (title === "") {
+
+        alert(
+            "Please enter the activity title."
+        );
+
+        return;
+    }
+
+    if (description === "") {
+
+        alert(
+            "Please enter the activity/question."
+        );
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/activities",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        student_username:
+                            selectedStudentUsername,
+
+                        title:
+                            title,
+
+                        description:
+                            description
+                    })
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                "❌ " +
+                (result.message ||
+                 "Failed to assign activity.")
+            );
+
+            return;
+        }
+
+        alert(
+            "✅ Activity assigned successfully!"
+        );
+
+        document.getElementById(
+            "activityTitle"
+        ).value = "";
+
+        document.getElementById(
+            "activityDescription"
+        ).value = "";
+
+    } catch (error) {
+
+        console.error(
+            "Assign activity error:",
+            error
+        );
+
+        alert(
+            "❌ Cannot connect to backend."
+        );
+    }
+}
+
+/* =====================================================
+   SHOW QUIZ FORM
+===================================================== */
+
+function showQuizForm() {
+
+    document.getElementById(
+        "activityForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "submissionsSection"
+    ).style.display = "none";
+
+    document.getElementById(
+        "progressBox"
+    ).style.display = "none";
+
+    document.getElementById(
+        "quizForm"
+    ).style.display = "block";
+
+
+    if (questionCount === 0) {
+
+        addQuestion();
+
+    }
+
+}
+
+
+/* =====================================================
+   ADD QUESTION
+===================================================== */
+function addQuestion() {
+
+    questionCount++;
+
+    const container =
+        document.getElementById("questionsContainer");
+
+    const box =
+        document.createElement("div");
+
+    box.className = "question-box";
+
+    box.id =
+        "questionBox-" + questionCount;
+
+    box.innerHTML = `
+
+        <button
+            class="remove-btn"
+            onclick="removeQuestion(${questionCount})">
+
+            ❌ Remove
+
+        </button>
+
+        <div class="question-number">
+
+            Question ${questionCount}
+
+        </div>
+
+        <label>
+            Question
+        </label>
+
+        <input
+            type="text"
+            id="question-${questionCount}"
+            placeholder="Enter question"
+        >
+
+        <label>
+            Option A
+        </label>
+
+        <input
+            type="text"
+            id="optionA-${questionCount}"
+            placeholder="Enter option A"
+        >
+
+        <label>
+            Option B
+        </label>
+
+        <input
+            type="text"
+            id="optionB-${questionCount}"
+            placeholder="Enter option B"
+        >
+
+        <label>
+            Option C
+        </label>
+
+        <input
+            type="text"
+            id="optionC-${questionCount}"
+            placeholder="Enter option C"
+        >
+
+        <label>
+            Option D
+        </label>
+
+        <input
+            type="text"
+            id="optionD-${questionCount}"
+            placeholder="Enter option D"
+        >
+
+        <label>
+            Correct Answer
+        </label>
+
+        <select
+            id="correct-${questionCount}">
+
+            <option value="">
+                Select correct option
+            </option>
+
+            <option value="A">
+                Option A
+            </option>
+
+            <option value="B">
+                Option B
+            </option>
+
+            <option value="C">
+                Option C
+            </option>
+
+            <option value="D">
+                Option D
+            </option>
+
+        </select>
+
+    `;
+
+    container.appendChild(box);
+}
+
+/* =====================================================
+   REMOVE QUESTION
+===================================================== */
+
+function removeQuestion(number) {
+
+    const box =
+        document.getElementById(
+            "questionBox-" + number
+        );
+
+
+    if (box) {
+
+        box.remove();
+
+    }
+
+}
+
+
+/* =====================================================
+   ASSIGN QUIZ
+===================================================== */
+async function assignQuiz() {
+
+    if (!selectedStudentUsername) {
+        alert("Please select a student first.");
+        return;
+    }
+
+    const quizTitle =
+        document.getElementById("quizTitle").value.trim();
+
+    if (quizTitle === "") {
+        alert("Please enter a quiz title.");
+        return;
+    }
+
+    const boxes =
+        document.querySelectorAll(".question-box");
+
+    if (boxes.length === 0) {
+        alert("Please add at least one question.");
+        return;
+    }
+
+    const questions = [];
+
+    let valid = true;
+
+    boxes.forEach(function(box) {
+
+        const id =
+            box.id.split("-")[1];
+
+        const question =
+            document
+            .getElementById("question-" + id)
+            .value
+            .trim();
+
+        const optionA =
+            document
+            .getElementById("optionA-" + id)
+            .value
+            .trim();
+
+        const optionB =
+            document
+            .getElementById("optionB-" + id)
+            .value
+            .trim();
+
+        const optionC =
+            document
+            .getElementById("optionC-" + id)
+            .value
+            .trim();
+
+        const optionD =
+            document
+            .getElementById("optionD-" + id)
+            .value
+            .trim();
+
+        const correct =
+            document
+            .getElementById("correct-" + id)
+            .value;
+
+        if (
+            question === "" ||
+            optionA === "" ||
+            optionB === "" ||
+            optionC === "" ||
+            optionD === "" ||
+            correct === ""
+        ) {
+            valid = false;
+            return;
+        }
+
+        let correctAnswer = "";
+
+        if (correct === "A") {
+            correctAnswer = optionA;
+        }
+
+        if (correct === "B") {
+            correctAnswer = optionB;
+        }
+
+        if (correct === "C") {
+            correctAnswer = optionC;
+        }
+
+        if (correct === "D") {
+            correctAnswer = optionD;
+        }
+
+        questions.push({
+            question: question,
+
+            options: [
+                optionA,
+                optionB,
+                optionC,
+                optionD
+            ],
+
+            answer: correctAnswer
+        });
+
+    });
+
+    if (!valid) {
+        alert(
+            "Please complete every question and select the correct answer."
+        );
+        return;
+    }
+
+    const teacherUsername =
+        sessionStorage.getItem("loggedInUsername");
+
+    if (!teacherUsername) {
+        alert("Teacher login information not found.");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/quizzes",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        teacher_username:
+                            teacherUsername,
+
+                        student_username:
+                            selectedStudentUsername,
+
+                        title:
+                            quizTitle,
+
+                        questions:
+                            questions
+                    })
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                "❌ " +
+                (
+                    result.message ||
+                    "Failed to assign quiz."
+                )
+            );
+
+            return;
+        }
+
+        showSuccess("quizSuccess");
+
+        document.getElementById(
+            "quizTitle"
+        ).value = "";
+
+        document.getElementById(
+            "questionsContainer"
+        ).innerHTML = "";
+
+        questionCount = 0;
+
+        addQuestion();
+
+    } catch (error) {
+
+        console.error(
+            "Assign quiz error:",
+            error
+        );
+
+        alert(
+            "❌ Cannot connect to backend."
+        );
+    }
+}
+
+
+/* =====================================================
+   VIEW SUBMITTED WORK
+===================================================== */
+
+function viewSubmittedWork() {
+
+    if (!selectedStudentUsername) {
+
+        alert("Please select a student first.");
+
+        return;
+    }
+
+
+    document.getElementById(
+        "activityForm"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "quizForm"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "progressBox"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "submissionsSection"
+    ).style.display = "block";
+
+
+    loadSubmittedWork();
+
+}
+
+
+
+/* =====================================================
+   LOAD SUBMITTED WORK
+===================================================== */
+
+async function loadSubmittedWork() {
+
+    const container =
+        document.getElementById(
+            "submissionsContainer"
+        );
+
+    container.innerHTML = `
+        <div class="empty">
+            Loading submitted work...
+        </div>
+    `;
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/api/activities/" +
+            encodeURIComponent(
+                selectedStudentUsername
+            )
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load submitted work"
+            );
+        }
+
+        const activities =
+            await response.json();
+
+        const submittedActivities =
+            activities.filter(
+                activity =>
+                    Number(activity.submitted) === 1
+            );
+
+        if (submittedActivities.length === 0) {
+
+            container.innerHTML = `
+                <div class="empty">
+                    📭 The student has not submitted
+                    any work yet.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML = "";
+
+        submittedActivities.forEach(
+            function(activity) {
+
+                container.innerHTML += `
+                    <div class="submission-card">
+
+                        <h3>
+                            📝 ${escapeHTML(
+                                activity.title
+                            )}
+                        </h3>
+
+                        <p>
+                            <strong>Activity:</strong>
+                        </p>
+
+                        <p>
+                            ${escapeHTML(
+                                activity.description
+                            )}
+                        </p>
+
+                        <p>
+                            <strong>Student's Work:</strong>
+                        </p>
+
+                        <div class="answer-box">
+                            ${escapeHTML(
+                                activity.answer
+                            )}
+                        </div>
+
+                        <p>
+                           <strong>Submitted:</strong>
+${
+    activity.submitted_date
+        ? new Date(
+            activity.submitted_date
+        ).toLocaleString(
+            "en-IN",
+            {
+                timeZone: "Asia/Kolkata",
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true
+            }
+        )
+        : ""
+}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            ✅ Submitted
+                        </p>
+
+                    </div>
+                `;
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Submitted work error:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty">
+                ❌ Cannot load submitted work.
+                Please make sure the backend is running.
+            </div>
+        `;
+    }
+}
+
+/* =====================================================
+   LOAD PROGRESS
+/* =====================================================
+   LOAD STUDENT PROGRESS FROM MYSQL
+===================================================== */
+
+async function loadTeacherProgress() {
+
+    if (!selectedStudentUsername) {
+        return;
+    }
+
+
+    const box =
+        document.getElementById(
+            "progressBox"
+        );
+
+    const content =
+        document.getElementById(
+            "progressContent"
+        );
+
+
+    content.innerHTML = `
+        <div class="empty">
+            Loading student progress...
+        </div>
+    `;
+
+    box.style.display = "block";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/progress/" +
+                encodeURIComponent(
+                    selectedStudentUsername
+                )
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load student progress"
+            );
+        }
+
+
+        const student =
+            await response.json();
+            const quizResponse =
+    await fetch(
+        "http://localhost:3000/api/quiz-results/" +
+        encodeURIComponent(
+            selectedStudentUsername
+        )
+    );
+
+const quizResults =
+    await quizResponse.json();
+
+const latestQuizResult =
+    quizResults.length > 0
+        ? quizResults[0]
+        : null;
+
+
+        const activities =
+            Number(
+                student.activities_completed
+            ) || 0;
+
+
+        const percentage =
+            Number(
+                student.quiz_score
+            ) || 0;
+
+
+        const streak =
+            Number(
+                student.streak
+            ) || 0;
+
+
+        const badge =
+            student.badge ||
+            "Not earned";
+
+
+        /*
+           Current database stores the quiz
+           score as a percentage.
+        */
+
+       const marks =
+    latestQuizResult
+        ? latestQuizResult.score
+        : 0;
+
+const total =
+    latestQuizResult
+        ? latestQuizResult.total
+        : 0;
+
+        content.innerHTML = `
+
+            <div class="progress-item">
+
+                👤 Student Username:
+
+                <strong>
+                    ${escapeHTML(
+                        selectedStudentUsername
+                    )}
+                </strong>
+
+            </div>
+            <div class="progress-item">
+
+    🎂 Age:
+
+    <strong>
+        ${escapeHTML(
+            String(student.age || "Not available")
+        )}
+    </strong>
+
+</div>
+
+
+            <div class="progress-item">
+
+                📝 Activities Completed:
+
+                <strong>
+                    ${activities}
+                </strong>
+
+            </div>
+
+
+            <div class="progress-item">
+
+                🧠 Quiz Score:
+
+                <strong>
+                    ${marks} / ${total}
+                </strong>
+
+            </div>
+
+
+            <div class="progress-item">
+
+                📈 Percentage:
+
+                <strong>
+                    ${percentage}%
+                </strong>
+
+            </div>
+
+
+            <div class="progress-item">
+
+                🏅 Badge:
+
+                <strong>
+                    ${escapeHTML(
+                        badge
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="progress-item">
+
+                🔥 Study Streak:
+
+                <strong>
+                    ${streak} day(s)
+                </strong>
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Teacher progress error:",
+            error
+        );
+
+
+        content.innerHTML = `
+
+            <div class="empty">
+
+                ❌ Cannot load student progress.
+
+                <br><br>
+
+                Please make sure the backend
+                server is running.
+
+            </div>
+
+        `;
+    }
+}
+async function viewStudentRecording() {
+
+    if (!selectedStudentUsername) {
+
+        alert("Please select a student first.");
+
+        return;
+    }
+
+    /* Hide other sections */
+
+    document.getElementById(
+        "activityForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "quizForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "submissionsSection"
+    ).style.display = "none";
+
+    document.getElementById(
+        "progressBox"
+    ).style.display = "none";
+
+
+    /* Create recording section */
+
+    let section =
+        document.getElementById(
+            "recordingSection"
+        );
+
+    if (!section) {
+
+        section =
+            document.createElement("div");
+
+        section.id =
+            "recordingSection";
+
+        section.className =
+            "card";
+
+        document.getElementById(
+            "dashboard"
+        ).appendChild(section);
+    }
+
+
+    section.style.display = "block";
+
+    section.innerHTML = `
+        <h2>🎥 Student Recording</h2>
+
+        <div class="empty">
+            Loading recording...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/recordings/" +
+                encodeURIComponent(
+                    selectedStudentUsername
+                )
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load recordings"
+            );
+        }
+
+        const recordings =
+            await response.json();
+
+
+        if (recordings.length === 0) {
+
+            section.innerHTML = `
+                <h2>🎥 Student Recording</h2>
+
+                <div class="empty">
+                    📭 No recording is available
+                    for this student yet.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        section.innerHTML = `
+            <h2>🎥 Student Recording</h2>
+        `;
+
+
+        recordings.forEach(
+            function(recording) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+                card.style.background =
+                    "#f8fbff";
+
+                card.style.border =
+                    "2px solid #dce5f0";
+
+                card.style.borderRadius =
+                    "12px";
+
+                card.style.padding =
+                    "18px";
+
+                card.style.marginBottom =
+                    "20px";
+
+
+                const video =
+                    document.createElement(
+                        "video"
+                    );
+
+                video.controls = true;
+
+                video.style.width =
+                    "100%";
+
+                video.style.maxWidth =
+                    "700px";
+
+                video.style.borderRadius =
+                    "10px";
+
+                video.style.display =
+                    "block";
+
+                video.style.marginTop =
+                    "15px";
+
+
+                video.src =
+                    "http://localhost:3000" +
+                    recording.video_url;
+
+
+                const title =
+                    document.createElement(
+                        "h3"
+                    );
+
+                title.textContent =
+                    "🧠 " +
+                    (
+                        recording.quiz_title ||
+                        "Student Quiz"
+                    );
+
+
+                const date =
+                    document.createElement(
+                        "p"
+                    );
+
+                const recordedDate =
+                    new Date(
+                        recording.recorded_date
+                    );
+
+                date.textContent =
+                    "Recorded on: " +
+                    recordedDate.toLocaleString(
+                        "en-IN",
+                        {
+                            timeZone:
+                                "Asia/Kolkata",
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                            hour12: true
+                        }
+                    );
+
+
+                card.appendChild(title);
+
+                card.appendChild(date);
+
+                card.appendChild(video);
+
+                section.appendChild(card);
+
+            }
+        );
+
+
+        section.scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Recording load error:",
+            error
+        );
+
+        section.innerHTML = `
+            <h2>🎥 Student Recording</h2>
+
+            <div class="empty">
+                ❌ Cannot load the recording.
+                Please make sure the backend
+                server is running.
+            </div>
+        `;
+    }
+}
+/* =====================================================
+   SUCCESS MESSAGE
+===================================================== */
+
+function showSuccess(id) {
+
+    const box =
+        document.getElementById(id);
+
+
+    box.style.display = "block";
+
+
+    setTimeout(function() {
+
+        box.style.display = "none";
+
+    }, 3000);
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutTeacher() {
+
+    sessionStorage.removeItem(
+        "teacherSelectedStudent"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+    if (!text) return "";
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+window.onload = function() {
+
+    const savedStudent =
+        sessionStorage.getItem(
+            "teacherSelectedStudent"
+        );
+
+
+    if (savedStudent) {
+
+        document.getElementById(
+            "studentUsername"
+        ).value =
+            savedStudent;
+
+    }
+
+};
+
+</script>
+
+</body>
+
+</html>

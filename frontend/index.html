@@ -1,0 +1,550 @@
+```html
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Computer-Based Learning Tool</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #dff6ff,
+                #f3e8ff
+            );
+
+            overflow: hidden;
+        }
+
+        /* =========================
+           BACKGROUND ANIMATION
+        ========================= */
+
+        .circle {
+            position: fixed;
+
+            border-radius: 50%;
+
+            opacity: 0.35;
+
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle1 {
+            width: 180px;
+            height: 180px;
+
+            background: #9bdcff;
+
+            top: 10%;
+            left: 8%;
+        }
+
+        .circle2 {
+            width: 140px;
+            height: 140px;
+
+            background: #d5a7ff;
+
+            bottom: 10%;
+            right: 10%;
+
+            animation-delay: 2s;
+        }
+
+        .circle3 {
+            width: 90px;
+            height: 90px;
+
+            background: #a8e6cf;
+
+            top: 15%;
+            right: 20%;
+
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            position: relative;
+
+            width: 430px;
+
+            padding: 35px;
+
+            background: white;
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.18);
+
+            text-align: center;
+
+            animation: formAppear 1s ease;
+        }
+
+        @keyframes formAppear {
+
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        h1 {
+            color: #243b64;
+
+            font-size: 32px;
+
+            margin-bottom: 8px;
+
+            animation: titleAppear 1.2s ease;
+        }
+
+        @keyframes titleAppear {
+
+            0% {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+        }
+
+        .subtitle {
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           LOGIN FORM
+        ========================= */
+
+        .login-box h2 {
+            color: #243b64;
+
+            margin-bottom: 8px;
+        }
+
+        .login-box p {
+            color: #666;
+        }
+
+        .input-group {
+            margin: 18px 0;
+
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 2px solid #ddd;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            font-size: 16px;
+
+            transition: 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4f6fdc;
+
+            box-shadow:
+                0 0 10px rgba(79, 111, 220, 0.25);
+
+            transform: scale(1.02);
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        button {
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 12px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        .login {
+            background: #4f6fdc;
+
+            color: white;
+        }
+
+        .create {
+            background: #f39c5a;
+
+            color: white;
+        }
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        #message {
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 90%;
+
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ANIMATED BACKGROUND -->
+
+    <div class="circle circle1"></div>
+
+    <div class="circle circle2"></div>
+
+    <div class="circle circle3"></div>
+
+
+    <!-- MAIN CONTAINER -->
+
+    <div class="container">
+
+        <!-- SIGN IN -->
+
+        <div id="loginSection">
+
+            <h1>
+                Computer-Based Learning Tool
+            </h1>
+
+            <p class="subtitle">
+                An Interactive and Inclusive Learning Platform
+            </p>
+
+            <div class="login-box">
+
+                <h2>
+                    🔐 Sign In
+                </h2>
+
+                <p>
+                    Please sign in to continue
+                </p>
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter Username">
+
+                </div>
+
+                <div class="input-group">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter Password">
+
+                </div>
+
+                <button
+                    class="login"
+                    onclick="signIn()">
+
+                    Sign In
+
+                </button>
+
+                <button
+                    class="create"
+                    onclick="createAccount()">
+
+                    Create Account
+
+                </button>
+
+                <p id="message"></p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+         async function signIn() {
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            const message =
+                document.getElementById("message");
+
+
+            // Check empty fields
+
+            if (username === "" || password === "") {
+
+                message.style.color = "red";
+
+                message.innerHTML =
+                    "⚠️ Please enter username and password.";
+
+                return;
+            }
+
+
+            // Login using backend
+
+let account;
+
+try {
+
+    const response = await fetch(
+        "http://localhost:3000/api/login",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+
+        message.style.color = "red";
+
+        message.innerHTML =
+            "❌ " + result.message;
+
+        return;
+    }
+
+    account = result.user;
+
+} catch (error) {
+
+    message.style.color = "red";
+
+    message.innerHTML =
+        "❌ Cannot connect to the backend.";
+
+    return;
+}
+
+            // Save login information
+
+            sessionStorage.setItem(
+                "firstSignIn",
+                "true"
+            );
+
+            sessionStorage.setItem(
+                "loggedInUsername",
+                account.username
+            );
+
+            sessionStorage.setItem(
+                "loggedInRole",
+                account.role
+            );
+
+
+            // =========================
+            // STUDENT ACCOUNT
+            // =========================
+
+            if (account.role === "student") {
+
+                // Check that age was saved
+
+                if (!account.age) {
+
+                    message.style.color = "red";
+
+                    message.innerHTML =
+                        "⚠️ Student age is not available.";
+
+                    return;
+                }
+
+
+                // Save student's selected age
+
+                sessionStorage.setItem(
+                    "selectedAge",
+                    account.age
+                );
+
+
+                // Open Learning Activities
+                // using the saved age
+
+                window.location.href =
+                    "learning-activities.html?age=" +
+                    encodeURIComponent(account.age);
+
+                return;
+            }
+
+
+            // =========================
+            // TEACHER ACCOUNT
+            // =========================
+
+            if (account.role === "teacher") {
+
+                window.location.href =
+                    "teacher-dashboard.html";
+
+                return;
+            }
+
+
+            // Invalid account type
+
+            message.style.color = "red";
+
+            message.innerHTML =
+                "❌ Invalid account type.";
+
+        }
+
+
+        // =========================
+        // CREATE ACCOUNT
+        // =========================
+
+        function createAccount() {
+
+            window.location.href =
+                "create-account.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+```

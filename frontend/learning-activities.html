@@ -1,0 +1,2346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Learning Activities</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #dff6ff,
+            #f3e8ff
+        );
+
+    min-height: 100vh;
+
+    padding: 25px;
+}
+
+.container {
+
+    max-width: 950px;
+
+    margin: auto;
+}
+
+/* ==============================
+   ANIMATIONS
+============================== */
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes pulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+@keyframes float {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+}
+
+/* ==============================
+   HEADER
+============================== */
+
+h1 {
+
+    text-align: center;
+
+    color: #243b64;
+
+    margin-bottom: 10px;
+
+    animation: float 3s infinite;
+}
+
+.welcome {
+
+    text-align: center;
+
+    color: #555;
+
+    margin-bottom: 25px;
+
+    font-size: 17px;
+}
+
+/* ==============================
+   CARD
+============================== */
+
+.card {
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
+
+    animation: fadeIn 0.6s ease;
+}
+
+.card h2 {
+
+    color: #243b64;
+
+    margin-top: 0;
+}
+
+/* ==============================
+   INFO
+============================== */
+
+.info {
+
+    background: #eef5ff;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+}
+
+/* ==============================
+   ACTIVITY
+============================== */
+
+.activity-card {
+
+    border: 2px solid #e1e8f0;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 18px;
+
+    background: #fafcff;
+
+    transition: 0.3s;
+}
+
+.activity-card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+}
+
+.activity-card h3 {
+
+    color: #3b5b92;
+
+    margin-top: 0;
+}
+
+.description {
+
+    font-size: 17px;
+
+    line-height: 1.6;
+
+    color: #444;
+
+    background: #f3f7ff;
+
+    padding: 15px;
+
+    border-radius: 10px;
+}
+
+textarea {
+
+    width: 100%;
+
+    min-height: 130px;
+
+    margin-top: 12px;
+
+    padding: 14px;
+
+    border: 2px solid #ccd7e5;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    resize: vertical;
+}
+
+/* ==============================
+   BUTTON
+============================== */
+
+button {
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 13px 20px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    margin-top: 12px;
+
+    transition: 0.3s;
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px rgba(0,0,0,0.15);
+}
+
+.submit-btn {
+
+    background: #45a77b;
+
+    color: white;
+}
+
+.submitted {
+
+    background: #e8f8ef;
+
+    border: 2px solid #45a77b;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-top: 12px;
+
+    color: #276749;
+}
+
+/* ==============================
+   QUIZ START
+============================== */
+
+.quiz-start {
+
+    display: none;
+
+    text-align: center;
+}
+
+.start-camera-btn {
+
+    background: #7b4bdc;
+
+    color: white;
+
+    font-size: 18px;
+
+    width: 100%;
+
+    padding: 16px;
+}
+
+/* ==============================
+   CAMERA
+============================== */
+
+.camera-section {
+
+    display: none;
+
+    text-align: center;
+}
+
+video {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    border-radius: 15px;
+
+    background: black;
+
+    margin-top: 15px;
+}
+
+.camera-status {
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #fff4d6;
+
+    color: #765800;
+
+    margin-top: 15px;
+}
+
+.start-quiz-btn {
+
+    background: #7b4bdc;
+
+    color: white;
+
+    font-size: 18px;
+
+    padding: 14px 25px;
+}
+
+.start-quiz-btn:disabled {
+
+    background: #aaa;
+
+    cursor: not-allowed;
+}
+
+/* ==============================
+   QUIZ
+============================== */
+
+.quiz-section {
+
+    display: none;
+}
+
+.quiz-title {
+
+    text-align: center;
+
+    color: #7b4bdc;
+
+    font-size: 24px;
+
+    font-weight: bold;
+}
+
+.question-number {
+
+    color: #666;
+
+    margin-bottom: 15px;
+}
+
+.question {
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #243b64;
+
+    margin-bottom: 20px;
+}
+
+.option {
+
+    display: block;
+
+    width: 100%;
+
+    background: #f2f5fa;
+
+    border: 2px solid #dce3ed;
+
+    padding: 15px;
+
+    margin: 10px 0;
+
+    border-radius: 10px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: 0.3s;
+}
+
+.option:hover {
+
+    background: #e5edff;
+
+    transform: translateX(5px);
+}
+
+/* ==============================
+   RESULT
+============================== */
+
+.result {
+
+    text-align: center;
+
+    display: none;
+}
+
+.score {
+
+    font-size: 32px;
+
+    color: #45a77b;
+
+    font-weight: bold;
+
+    animation: pulse 1s;
+}
+
+.badge {
+
+    font-size: 65px;
+
+    margin: 15px;
+}
+
+.progress-btn {
+
+    background: #243b64;
+
+    color: white;
+}
+
+.no-activity {
+
+    text-align: center;
+
+    color: #666;
+
+    padding: 20px;
+}
+
+/* ==============================
+   QUIZ EMPTY
+============================== */
+
+.no-quiz {
+
+    text-align: center;
+
+    background: #fff8e8;
+
+    padding: 20px;
+
+    border-radius: 12px;
+
+    color: #765800;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<h1>📚 Learning Activities</h1>
+
+<div class="welcome">
+
+Welcome,
+<strong id="studentName">
+Student
+</strong>!
+
+</div>
+
+
+<!-- ==============================
+     ACTIVITIES
+============================== -->
+
+<div class="card">
+
+<h2>
+📝 Activities Given by Teacher
+</h2>
+
+<div class="info">
+
+Solve each activity and click
+<strong>Submit Work</strong>.
+
+</div>
+
+<div id="activitiesContainer"></div>
+
+</div>
+
+
+<!-- ==============================
+     QUIZ AVAILABLE
+============================== -->
+
+<div
+    class="card quiz-start"
+    id="quizStartSection"
+>
+
+<h2>🧠 Teacher Quiz</h2>
+
+<p id="quizInfo"></p>
+
+<button
+    class="start-camera-btn"
+    onclick="startCamera()">
+
+📷 Start Camera Before Quiz
+
+</button>
+
+</div>
+
+
+<!-- ==============================
+     CAMERA
+============================== -->
+
+<div
+    class="card camera-section"
+    id="cameraSection"
+>
+
+<h2>📷 Camera Check</h2>
+
+<p>
+Please allow camera access before starting the quiz.
+</p>
+
+<video
+    id="video"
+    autoplay
+    playsinline>
+</video>
+
+<div
+    class="camera-status"
+    id="cameraStatus">
+
+Opening camera...
+
+</div>
+
+<button
+    class="start-quiz-btn"
+    id="startQuizButton"
+    onclick="beginQuiz()"
+    disabled>
+
+Start Teacher Quiz
+
+</button>
+
+</div>
+
+
+<!-- ==============================
+     QUIZ
+============================== -->
+
+<div
+    class="card quiz-section"
+    id="quizSection"
+>
+
+<div
+    class="quiz-title"
+    id="quizTitleDisplay">
+</div>
+
+<hr>
+
+<div
+    class="question-number"
+    id="questionNumber">
+</div>
+
+<div
+    class="question"
+    id="question">
+</div>
+
+<div id="options"></div>
+
+</div>
+
+
+<!-- ==============================
+     RESULT
+============================== -->
+
+<div
+    class="card result"
+    id="resultSection"
+>
+
+<h2>
+🎉 Quiz Completed!
+</h2>
+
+<div
+    class="badge"
+    id="badgeIcon">
+🏅
+</div>
+
+<p>Your Marks</p>
+
+<div
+    class="score"
+    id="scoreText">
+</div>
+
+<p id="percentageText"></p>
+
+<p id="streakText"></p>
+
+<button
+    class="progress-btn"
+    onclick="openProgress()">
+
+📊 View My Progress
+
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+const username =
+    sessionStorage.getItem(
+        "loggedInUsername"
+    );
+
+
+const studentAge =
+    sessionStorage.getItem(
+        "selectedAge"
+    ) ||
+    new URLSearchParams(
+        window.location.search
+    ).get("age");
+
+
+let teacherActivities = [];
+
+let teacherQuizzes = [];
+
+let selectedQuiz = null;
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let cameraStream = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let recordingStarted = false;
+let quizLockActive = false;
+/* =====================================================
+   STUDENT NAME
+===================================================== */
+
+if (username) {
+
+    document.getElementById(
+        "studentName"
+    ).textContent =
+        username;
+
+}
+
+
+/* =====================================================
+   LOAD ACTIVITIES
+===================================================== */
+
+async function loadTeacherActivities() {
+
+    if (!username) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/api/activities/" +
+            encodeURIComponent(username)
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to load activities");
+        }
+
+        teacherActivities = await response.json();
+
+        displayActivities();
+
+    } catch (error) {
+
+        console.error("Activity loading error:", error);
+
+        teacherActivities = [];
+
+        document.getElementById(
+            "activitiesContainer"
+        ).innerHTML = `
+            <div class="no-activity">
+                <h3>⚠️ Unable to load activities.</h3>
+                <p>Please make sure the backend server is running.</p>
+            </div>
+        `;
+
+        checkAllActivitiesSubmitted();
+    }
+}
+
+
+/* =====================================================
+   DISPLAY ACTIVITIES
+===================================================== */
+
+function displayActivities() {
+
+    const container =
+        document.getElementById(
+            "activitiesContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        teacherActivities.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="no-activity">
+
+                <h3>
+                    📚 No activities assigned yet.
+                </h3>
+
+                <p>
+                    Your teacher will provide activities here.
+                </p>
+
+            </div>
+
+        `;
+
+        checkQuizAvailability();
+
+        return;
+    }
+
+
+    teacherActivities.forEach(
+        function(activity, index) {
+
+            const activityDiv =
+                document.createElement(
+                    "div"
+                );
+
+
+            activityDiv.className =
+                "activity-card";
+
+
+            if (activity.submitted) {
+
+                activityDiv.innerHTML = `
+
+                    <h3>
+                        📝
+                        ${escapeHTML(activity.title)}
+                    </h3>
+
+                    <div class="description">
+                        ${escapeHTML(activity.description)}
+                    </div>
+
+                    <div class="submitted">
+
+                        <strong>
+                            ✅ Work Submitted
+                        </strong>
+
+                        <p>
+                            <strong>Your Answer:</strong>
+                        </p>
+
+                        <p>
+                            ${escapeHTML(activity.answer)}
+                        </p>
+
+                        <p>
+                            <strong>Submitted on:</strong>
+                          ${formatSubmittedDate(
+    activity.submittedDate ||
+    activity.submitted_date ||
+    ""
+
+                            )}
+                        </p>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                activityDiv.innerHTML = `
+
+                    <h3>
+                        📝
+                        ${escapeHTML(activity.title)}
+                    </h3>
+
+                    <div class="description">
+                        ${escapeHTML(activity.description)}
+                    </div>
+
+                    <p>
+                        <strong>
+                            Solve the activity:
+                        </strong>
+                    </p>
+
+                    <textarea
+                        id="answer-${index}"
+                        placeholder="Write your answer here..."
+                    ></textarea>
+
+                    <button
+                        class="submit-btn"
+                        onclick="submitActivity(${index})">
+
+                        ✅ Submit Work
+
+                    </button>
+
+                `;
+
+            }
+
+
+            container.appendChild(
+                activityDiv
+            );
+
+        }
+    );
+
+
+    checkQuizAvailability();
+
+}
+
+
+/* =====================================================
+   SUBMIT ACTIVITY
+===================================================== */
+async function submitActivity(index) {
+
+    const answerBox =
+        document.getElementById(
+            "answer-" + index
+        );
+
+    const answer =
+        answerBox.value.trim();
+
+    if (answer === "") {
+
+        alert(
+            "Please solve the activity before submitting."
+        );
+
+        return;
+    }
+
+    const activity =
+        teacherActivities[index];
+
+    if (!activity || !activity.id) {
+
+        alert(
+            "Activity information is missing."
+        );
+
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/api/activities/" +
+            activity.id +
+            "/submit",
+            {
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    answer: answer
+                })
+            }
+        );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                "❌ " + result.message
+            );
+
+            return;
+        }
+
+        alert(
+            "Your work has been submitted successfully! ✅"
+        );
+
+        await loadTeacherActivities();
+
+    } catch (error) {
+
+        console.error(
+            "Submit activity error:",
+            error
+        );
+
+        alert(
+            "❌ Cannot connect to the backend."
+        );
+    }
+}
+
+
+/* =====================================================
+   LOAD TEACHER QUIZ
+===================================================== */
+async function loadTeacherQuiz() {
+
+    if (!username) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/quizzes/" +
+                encodeURIComponent(username)
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load quizzes"
+            );
+        }
+
+        teacherQuizzes =
+            await response.json();
+
+        checkQuizAvailability();
+
+    } catch (error) {
+
+        console.error(
+            "Quiz loading error:",
+            error
+        );
+
+        teacherQuizzes = [];
+
+        checkQuizAvailability();
+    }
+}
+
+/* =====================================================
+   CHECK QUIZ AVAILABILITY
+===================================================== */
+
+function checkQuizAvailability() {
+
+    const quizStart =
+        document.getElementById(
+            "quizStartSection"
+        );
+
+    const quizInfo =
+        document.getElementById(
+            "quizInfo"
+        );
+
+
+    /* No teacher quiz available */
+
+    if (teacherQuizzes.length === 0) {
+
+        quizStart.style.display =
+            "none";
+
+        return;
+    }
+
+
+    /* Teacher must assign at least one activity */
+
+    if (teacherActivities.length === 0) {
+
+        quizStart.style.display =
+            "block";
+
+        quizInfo.innerHTML = `
+
+            📝 Your teacher has not assigned
+            any activity yet.
+
+            <br><br>
+
+            Please wait for your teacher
+            to assign an activity.
+
+        `;
+
+        return;
+    }
+
+
+    /* All assigned activities must be submitted */
+
+    const allActivitiesCompleted =
+        teacherActivities.every(
+            activity =>
+                Number(activity.submitted) === 1 ||
+                activity.submitted === true
+        );
+
+
+    if (!allActivitiesCompleted) {
+
+        quizStart.style.display =
+            "block";
+
+        quizInfo.innerHTML = `
+
+            📝 Please complete and submit
+            all teacher activities first.
+
+            <br><br>
+
+            Then you can start the quiz.
+
+        `;
+
+        return;
+    }
+
+
+    /* Select latest teacher quiz */
+
+    selectedQuiz =
+        teacherQuizzes[
+            teacherQuizzes.length - 1
+        ];
+
+
+    quizStart.style.display =
+        "block";
+
+
+    quizInfo.innerHTML = `
+
+        <strong>
+            ${escapeHTML(selectedQuiz.title)}
+        </strong>
+
+        <br><br>
+
+        ${selectedQuiz.questions.length}
+        questions are waiting for you.
+
+        <br>
+
+        📷 Camera will open before the quiz.
+
+    `;
+}
+
+
+/* =====================================================
+   START CAMERA
+===================================================== */
+/* =====================================================
+   START CAMERA BEFORE QUIZ
+===================================================== */
+
+async function startCamera() {
+
+    /* Teacher must assign an activity */
+
+    if (teacherActivities.length === 0) {
+
+        alert(
+            "Please wait for your teacher to assign activities."
+        );
+
+        return;
+    }
+
+
+    /* Every assigned activity must be submitted */
+
+    const allActivitiesCompleted =
+        teacherActivities.every(
+            activity =>
+                Number(activity.submitted) === 1 ||
+                activity.submitted === true
+        );
+
+
+    if (!allActivitiesCompleted) {
+
+        alert(
+            "Please complete and submit all activities first."
+        );
+
+        return;
+    }
+
+
+    /* A teacher quiz must exist */
+
+    if (
+        !selectedQuiz ||
+        !selectedQuiz.questions ||
+        selectedQuiz.questions.length === 0
+    ) {
+
+        alert(
+            "No teacher quiz is available."
+        );
+
+        return;
+    }
+
+
+    /* Open camera section */
+
+    document.getElementById(
+        "cameraSection"
+    ).style.display = "block";
+
+
+    document.getElementById(
+        "cameraSection"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+    try {
+
+        cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+            });
+
+
+        const video =
+            document.getElementById("video");
+
+
+        video.srcObject =
+            cameraStream;
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).textContent =
+            "✅ Camera is active. You can start the quiz.";
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).style.background =
+            "#e8f8ef";
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).style.color =
+            "#276749";
+
+
+        document.getElementById(
+            "startQuizButton"
+        ).disabled = false;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Camera error:",
+            error
+        );
+
+
+        document.getElementById(
+            "cameraStatus"
+        ).textContent =
+            "❌ Camera access was not allowed. Please allow camera permission and try again.";
+
+        document.getElementById(
+            "startQuizButton"
+        ).disabled = true;
+
+    }
+}
+
+function startRecording() {
+
+    if (!cameraStream) {
+
+        alert("Camera is not active.");
+
+        return;
+    }
+
+
+    recordedChunks = [];
+
+
+    try {
+
+        mediaRecorder =
+            new MediaRecorder(
+                cameraStream,
+                {
+                    mimeType: "video/webm"
+                }
+            );
+
+    }
+
+    catch (error) {
+
+        mediaRecorder =
+            new MediaRecorder(
+                cameraStream
+            );
+
+    }
+
+
+    mediaRecorder.ondataavailable =
+        function(event) {
+
+            if (
+                event.data &&
+                event.data.size > 0
+            ) {
+
+                recordedChunks.push(
+                    event.data
+                );
+
+            }
+
+        };
+
+
+    mediaRecorder.onstart =
+        function() {
+
+            recordingStarted = true;
+
+            alert(
+                "🔴 Recording has started."
+            );
+
+        };
+
+
+    mediaRecorder.onstop =
+        async function() {
+
+            recordingStarted = false;
+
+            await saveStudentRecording();
+
+        };
+
+
+    mediaRecorder.start();
+
+}
+function openRecordingDatabase() {
+
+    return new Promise(function(resolve, reject) {
+
+        const request =
+            indexedDB.open(
+                "LearningPlatformDB",
+                1
+            );
+
+
+        request.onupgradeneeded =
+            function(event) {
+
+                const db =
+                    event.target.result;
+
+
+                if (
+                    !db.objectStoreNames.contains(
+                        "studentRecordings"
+                    )
+                ) {
+
+                    db.createObjectStore(
+                        "studentRecordings",
+                        {
+                            keyPath: "username"
+                        }
+                    );
+
+                }
+
+            };
+
+
+        request.onsuccess =
+            function(event) {
+
+                resolve(
+                    event.target.result
+                );
+
+            };
+
+
+        request.onerror =
+            function() {
+
+                reject(
+                    request.error
+                );
+
+            };
+
+    });
+
+}
+async function saveStudentRecording() {
+
+    if (
+        !username ||
+        recordedChunks.length === 0
+    ) {
+        return;
+    }
+
+    try {
+
+        const videoBlob =
+            new Blob(
+                recordedChunks,
+                {
+                    type: "video/webm"
+                }
+            );
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "video",
+            videoBlob,
+            username + "-quiz.webm"
+        );
+
+        formData.append(
+            "student_username",
+            username
+        );
+
+        formData.append(
+            "quiz_title",
+            selectedQuiz
+                ? selectedQuiz.title
+                : "Student Quiz"
+        );
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/recordings",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            console.error(
+                "Recording upload failed:",
+                result
+            );
+
+            alert(
+                "❌ Recording could not be uploaded."
+            );
+
+            return;
+        }
+
+        console.log(
+            "✅ Recording uploaded successfully:",
+            result
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Recording upload error:",
+            error
+        );
+
+        alert(
+            "❌ Unable to upload the recording."
+        );
+
+    }
+}
+/* =====================================================
+   QUIZ LOCK
+===================================================== */
+
+let quizLockInitialized = false;
+
+function activateQuizLock() {
+
+    quizLockActive = true;
+
+    /* Add listeners only once */
+    if (quizLockInitialized) {
+        return;
+    }
+
+    quizLockInitialized = true;
+
+    /* Prevent right click */
+    document.addEventListener("contextmenu", function(event) {
+
+        if (quizLockActive) {
+            event.preventDefault();
+        }
+
+    });
+
+    /* Prevent copy */
+    document.addEventListener("copy", function(event) {
+
+        if (quizLockActive) {
+            event.preventDefault();
+        }
+
+    });
+
+    /* Prevent cut */
+    document.addEventListener("cut", function(event) {
+
+        if (quizLockActive) {
+            event.preventDefault();
+        }
+
+    });
+
+    /* Prevent paste */
+    document.addEventListener("paste", function(event) {
+
+        if (quizLockActive) {
+            event.preventDefault();
+        }
+
+    });
+
+    /* Prevent text selection */
+    document.addEventListener("selectstart", function(event) {
+
+        if (quizLockActive) {
+            event.preventDefault();
+        }
+
+    });
+
+    /* Block common browser shortcuts */
+    document.addEventListener("keydown", function(event) {
+
+        if (!quizLockActive) {
+            return;
+        }
+
+        const key = event.key.toUpperCase();
+
+        if (
+            event.key === "F12" ||
+            (event.ctrlKey && event.shiftKey &&
+             ["I", "J", "C"].includes(key)) ||
+            (event.ctrlKey && key === "U") ||
+            (event.ctrlKey && key === "S")
+        ) {
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            alert(
+                "⚠️ Browser controls are disabled during the quiz."
+            );
+
+        }
+
+    });
+
+    /* Detect leaving the page/tab */
+    document.addEventListener("visibilitychange", function() {
+
+        if (
+            quizLockActive &&
+            document.hidden
+        ) {
+
+            quizLockActive = false;
+
+            alert(
+                "⚠️ You left the quiz page. The quiz will be ended."
+            );
+
+            finishQuiz();
+
+        }
+
+    });
+
+    /* Prevent browser Back */
+    history.pushState(
+        null,
+        "",
+        window.location.href
+    );
+
+    window.addEventListener("popstate", function() {
+
+        if (quizLockActive) {
+
+            history.pushState(
+                null,
+                "",
+                window.location.href
+            );
+
+            alert(
+                "⚠️ You cannot leave the quiz until it is completed."
+            );
+
+        }
+
+    });
+
+    /* Try fullscreen */
+    if (document.documentElement.requestFullscreen) {
+
+        document.documentElement
+            .requestFullscreen()
+            .catch(function(error) {
+
+                console.log(
+                    "Fullscreen was not enabled:",
+                    error
+                );
+
+            });
+
+    }
+
+}
+
+
+/* =====================================================
+   DEACTIVATE QUIZ LOCK
+===================================================== */
+
+function deactivateQuizLock() {
+
+    quizLockActive = false;
+
+    /* Exit fullscreen after quiz */
+    if (document.fullscreenElement) {
+
+        document.exitFullscreen()
+            .catch(function() {});
+
+    }
+
+}
+/* =====================================================
+   BEGIN QUIZ
+===================================================== */
+
+function beginQuiz() {
+
+    if (!selectedQuiz) {
+
+        alert(
+            "Teacher quiz not found."
+        );
+
+        return;
+    }
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+
+    document.getElementById(
+        "cameraSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "quizStartSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "quizSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "quizTitleDisplay"
+    ).textContent =
+        "🧠 " +
+        selectedQuiz.title;
+
+
+    document.getElementById(
+        "quizSection"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+     startRecording();
+
+activateQuizLock();
+
+displayQuestion();
+
+}
+
+
+/* =====================================================
+   DISPLAY QUESTION
+===================================================== */
+
+function displayQuestion() {
+
+    const q =
+        selectedQuiz.questions[
+            currentQuestion
+        ];
+
+
+    document.getElementById(
+        "questionNumber"
+    ).textContent =
+
+        "Question " +
+        (currentQuestion + 1) +
+        " of " +
+        selectedQuiz.questions.length;
+
+
+    document.getElementById(
+        "question"
+    ).textContent =
+        q.question;
+
+
+    const options =
+        document.getElementById(
+            "options"
+        );
+
+
+    options.innerHTML = "";
+
+
+    q.options.forEach(
+        function(option) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "option";
+
+
+            button.textContent =
+                option;
+
+
+            button.onclick =
+                function() {
+
+                    checkAnswer(option);
+
+                };
+
+
+            options.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CHECK ANSWER
+===================================================== */
+
+function checkAnswer(
+    selectedAnswer
+) {
+
+    const correctAnswer =
+        selectedQuiz.questions[
+            currentQuestion
+        ].answer;
+
+
+    if (
+        selectedAnswer ===
+        correctAnswer
+    ) {
+
+        score++;
+
+    }
+
+
+    currentQuestion++;
+
+
+    if (
+        currentQuestion <
+        selectedQuiz.questions.length
+    ) {
+
+        displayQuestion();
+
+    } else {
+
+        finishQuiz();
+
+    }
+
+}
+
+
+/* =====================================================
+   FINISH QUIZ
+===================================================== */
+
+async function finishQuiz() {
+    deactivateQuizLock();
+
+    /* Stop recording */
+
+    if (
+        mediaRecorder &&
+        mediaRecorder.state === "recording"
+    ) {
+        mediaRecorder.stop();
+    }
+
+    /* Stop camera */
+
+    if (cameraStream) {
+
+        cameraStream
+        .getTracks()
+        .forEach(
+            track =>
+                track.stop()
+        );
+
+        cameraStream = null;
+
+    }
+
+
+    const total =
+        selectedQuiz.questions.length;
+
+
+    const percentage =
+        Math.round(
+            (score / total) * 100
+        );
+
+
+    /* Save result inside teacher quiz */
+
+   /* Save result in MySQL */
+
+try {
+
+    const response =
+        await fetch(
+            "http://localhost:3000/api/quiz-results",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    quiz_id:
+                        selectedQuiz.id,
+
+                    student_username:
+                        username,
+
+                    score:
+                        score,
+
+                    total:
+                        total,
+
+                    percentage:
+                        percentage
+
+                })
+            }
+        );
+
+    const result =
+        await response.json();
+
+    if (!response.ok) {
+
+        console.error(
+            "Quiz result save failed:",
+            result.message
+        );
+
+    } else {
+
+        console.log(
+            "✅ Quiz result saved to MySQL"
+        );
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Quiz result connection error:",
+        error
+    );
+
+}
+await updateStudentProgress(
+    score,
+    total,
+    percentage
+);
+
+await updateStreak();
+
+showResult(
+    score,
+    total,
+    percentage
+);
+
+}
+
+
+/* =====================================================
+   SHOW RESULT
+===================================================== */
+
+async function showResult(
+    score,
+    total,
+    percentage
+) {
+
+    document.getElementById(
+        "quizSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "resultSection"
+    ).style.display =
+        "block";
+
+
+    document.getElementById(
+        "scoreText"
+    ).textContent =
+
+        score +
+        " / " +
+        total;
+
+
+    document.getElementById(
+        "percentageText"
+    ).textContent =
+
+        "Percentage: " +
+        percentage +
+        "%";
+
+
+    let badge =
+        "📘";
+
+
+    if (percentage >= 80) {
+
+        badge =
+            "🏆";
+
+    } else if (percentage >= 60) {
+
+        badge =
+            "🥇";
+
+    } else if (percentage >= 40) {
+
+        badge =
+            "🥈";
+
+    }
+
+
+    document.getElementById(
+        "badgeIcon"
+    ).textContent =
+        badge;
+
+}
+
+/* =====================================================
+   UPDATE STUDENT PROGRESS
+===================================================== */
+
+async function updateStudentProgress(
+    score,
+    total,
+    percentage
+) {
+
+    const completedActivities =
+        teacherActivities.filter(
+            activity =>
+                Number(activity.submitted) === 1 ||
+                activity.submitted === true
+        ).length;
+
+    let badge = "📘 Keep Learning";
+
+    if (percentage >= 80) {
+        badge = "🏆 Learning Champion";
+    } else if (percentage >= 60) {
+        badge = "🥇 Good Learner";
+    } else if (percentage >= 40) {
+        badge = "🥈 Keep Improving";
+    }
+
+    let streak = 1;
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/progress/" +
+                encodeURIComponent(username)
+            );
+
+        if (response.ok) {
+
+            const oldProgress =
+                await response.json();
+
+            streak =
+                Math.max(
+                    1,
+                    Number(oldProgress.streak) || 0
+                );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Error loading previous progress:",
+            error
+        );
+
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/progress",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        student_username:
+                            username,
+
+                        activities_completed:
+                            completedActivities,
+
+                        quiz_score:
+                            percentage,
+
+                        last_quiz_score:
+                            percentage,
+
+                        streak:
+                            streak,
+
+                        badge:
+                            badge
+                    })
+                }
+            );
+
+        const result =
+            await response.json();
+
+        if (!response.ok) {
+
+            console.error(
+                "Progress save failed:",
+                result.message
+            );
+
+            return false;
+        }
+
+        console.log(
+            "Progress saved successfully"
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Progress connection error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+/* =====================================================
+   UPDATE STREAK
+===================================================== */
+
+async function updateStreak() {
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:3000/api/progress/" +
+                encodeURIComponent(username)
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load streak"
+            );
+        }
+
+        const progress =
+            await response.json();
+
+        const streak =
+            Math.max(
+                1,
+                Number(progress.streak) || 0
+            );
+
+        document.getElementById(
+            "streakText"
+        ).textContent =
+            "🔥 Study Streak: " +
+            streak +
+            " day(s)";
+
+    } catch (error) {
+
+        console.error(
+            "Streak loading error:",
+            error
+        );
+
+        document.getElementById(
+            "streakText"
+        ).textContent =
+            "🔥 Study Streak: 1 day(s)";
+    }
+}
+
+/* =====================================================
+   OPEN PROGRESS
+===================================================== */
+
+function openProgress() {
+
+    window.location.href =
+        "student-progress.html?student=" +
+        encodeURIComponent(username);
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+    if (!text) return "";
+
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+/* =====================================================
+   ACTIVITY COPY / PASTE LOCK
+===================================================== */
+
+function activateActivityLock() {
+
+    /* Prevent copy */
+    document.addEventListener("copy", function(event) {
+        event.preventDefault();
+    });
+
+    /* Prevent cut */
+    document.addEventListener("cut", function(event) {
+        event.preventDefault();
+    });
+
+    /* Prevent paste */
+    document.addEventListener("paste", function(event) {
+        event.preventDefault();
+
+        alert(
+            "⚠️ Copy and paste are not allowed in activities."
+        );
+    });
+
+    /* Block Ctrl+C, Ctrl+X and Ctrl+V */
+    document.addEventListener("keydown", function(event) {
+
+        const key = event.key.toUpperCase();
+
+        if (
+            event.ctrlKey &&
+            ["C", "X", "V"].includes(key)
+        ) {
+
+            event.preventDefault();
+
+            alert(
+                "⚠️ Copy and paste are not allowed in activities."
+            );
+
+        }
+
+    });
+
+}
+window.onload = function() {
+
+    if (!username) {
+
+        alert(
+            "Please sign in first."
+        );
+
+
+        window.location.href =
+            "index.html";
+
+
+        return;
+
+    }
+activateActivityLock();
+
+    loadTeacherActivities();
+
+    loadTeacherQuiz();
+
+};
+function formatSubmittedDate(dateValue) {
+
+    if (!dateValue) {
+        return "";
+    }
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return String(dateValue);
+    }
+
+    return date.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+}
+
+</script>
+
+</body>
+
+</html>
