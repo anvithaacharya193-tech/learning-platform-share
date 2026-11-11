@@ -61,7 +61,7 @@ const db = mysql.createConnection({
 
 db.connect((error) => {
     if (error) {
-        console.error("MySQL connection failed:", error.message);
+        console.error("MySQL connection failed:", error);
         return;
     }
 
