@@ -702,113 +702,70 @@ let questionCount = 0;
 
 async function studentLogin() {
 
-    const username =
-        document
-        .getElementById("studentUsername")
-        .value
-        .trim();
-
-    const password =
-        document
-        .getElementById("studentPassword")
-        .value
-        .trim();
-
+    const username = document.getElementById("studentUsername").value.trim();
+    const password = document.getElementById("studentPassword").value.trim();
 
     if (username === "" || password === "") {
-
-        alert(
-            "Please enter both username and password."
-        );
-
+        alert("Please enter both username and password.");
         return;
     }
 
+    try {
+        const response = await fetch(
+            "https://learning-platform-share-production.up.railway.app/api/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            }
+        );
 
-   /* CHECK STUDENT ACCOUNT USING MYSQL */
+        const result = await response.json();
 
-try {
-
-    const response = await fetch(
-        "https://learning-platform-share-production.up.railway.app/api/login",
-        {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
+        if (!response.ok) {
+            alert(result.message || "Student login failed.");
+            return;
         }
-    );
 
-    const result = await response.json();
+        // Support different backend response formats
+        const user = result.user || result.data?.user || result;
 
-    if (!response.ok) {
+        if (!user || !user.role) {
+            console.error("Unexpected login response:", result);
+            alert("Unable to verify student account. Please check the backend response.");
+            return;
+        }
 
-        alert(
-            "Student username or password is incorrect."
-        );
+        if (String(user.role).toLowerCase() !== "student") {
+            alert("The selected account is not a student account.");
+            return;
+        }
 
-        return;
+        selectedStudentUsername = username;
+
+        sessionStorage.setItem("teacherSelectedStudent", username);
+
+        document.getElementById("studentLoginCard").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+        document.getElementById("selectedStudent").innerHTML =
+            "<strong>Selected Student:</strong> " + escapeHTML(username);
+
+        loadTeacherProgress();
+
+    } catch (error) {
+        console.error("Student login error:", error);
+        alert("Cannot connect to the backend. Please try again.");
     }
-
-    if (result.user.role !== "student") {
-
-        alert(
-            "The selected account is not a student account."
-        );
-
-        return;
-    }
-
-} catch (error) {
-
-    console.error(
-        "Student login error:",
-        error
-    );
-
-    alert(
-        "Cannot connect to the backend."
-    );
-
-    return;
 }
 
-    selectedStudentUsername = username;
 
 
-    sessionStorage.setItem(
-        "teacherSelectedStudent",
-        username
-    );
-
-
-    document.getElementById(
-        "studentLoginCard"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "dashboard"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "selectedStudent"
-    ).innerHTML =
-
-        "<strong>Selected Student:</strong> " +
-        escapeHTML(username);
-
-
-    loadTeacherProgress();
-
-}
 
 
 /* =====================================================
