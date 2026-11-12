@@ -730,7 +730,7 @@ async function studentLogin() {
 try {
 
     const response = await fetch(
-        "http://localhost:3000/api/login",
+        "https://learning-platform-share-production.up.railway.app/api/login",
         {
             method: "POST",
 
@@ -904,7 +904,7 @@ async function assignActivity() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/activities",
+                "https://learning-platform-share-production.up.railway.app/api/activities",
                 {
                     method: "POST",
 
@@ -1271,7 +1271,7 @@ async function assignQuiz() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/quizzes",
+                "https://learning-platform-share-production.up.railway.app/api/quizzes",
                 {
                     method: "POST",
 
@@ -1400,7 +1400,7 @@ async function loadSubmittedWork() {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/activities/" +
+            "https://learning-platform-share-production.up.railway.app/api/activities/" +
             encodeURIComponent(
                 selectedStudentUsername
             )
@@ -1553,7 +1553,7 @@ async function loadTeacherProgress() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/progress/" +
+                "https://learning-platform-share-production.up.railway.app/api/progress/" +
                 encodeURIComponent(
                     selectedStudentUsername
                 )
@@ -1572,7 +1572,7 @@ async function loadTeacherProgress() {
             await response.json();
             const quizResponse =
     await fetch(
-        "http://localhost:3000/api/quiz-results/" +
+        "https://learning-platform-share-production.up.railway.app/api/quiz-results/" +
         encodeURIComponent(
             selectedStudentUsername
         )
@@ -1801,7 +1801,7 @@ async function viewStudentRecording() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/recordings/" +
+                "https://learning-platform-share-production.up.railway.app/api/recordings/" +
                 encodeURIComponent(
                     selectedStudentUsername
                 )
@@ -1886,7 +1886,7 @@ async function viewStudentRecording() {
 
 
                 video.src =
-                    "http://localhost:3000" +
+                    "https://learning-platform-share-production.up.railway.app" +
                     recording.video_url;
 
 
