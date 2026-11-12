@@ -701,7 +701,7 @@ let questionCount = 0;
 ===================================================== */
 
 async function studentLogin() {
-
+alert("Student Login Button Working!");
     const username = document.getElementById("studentUsername").value.trim();
     const password = document.getElementById("studentPassword").value.trim();
 
@@ -763,93 +763,7 @@ async function studentLogin() {
         alert("Cannot connect to the backend. Please try again.");
     }
 }
-       /* CHECK STUDENT ACCOUNT USING MYSQL */
-
-try {
-
-    const response = await fetch(
-        "https://learning-platform-share-production.up.railway.app/api/login",
-        {
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        }
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-
-        alert(
-            "Student username or password is incorrect."
-        );
-
-        return;
-    }
-
-    if (result.user.role !== "student") {
-
-        alert(
-            "The selected account is not a student account."
-        );
-
-        return;
-    }
-
-} catch (error) {
-
-    console.error(
-        "Student login error:",
-        error
-    );
-
-    alert(
-        "Cannot connect to the backend."
-    );
-
-    return;
-}
-
-    selectedStudentUsername = username;
-
-
-    sessionStorage.setItem(
-        "teacherSelectedStudent",
-        username
-    );
-
-
-    document.getElementById(
-        "studentLoginCard"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "dashboard"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "selectedStudent"
-    ).innerHTML =
-
-        "<strong>Selected Student:</strong> " +
-        escapeHTML(username);
-
-
-    loadTeacherProgress();
-
-}
-
-
-
+    
 
 
 /* =====================================================
