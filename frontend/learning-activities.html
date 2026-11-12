@@ -731,7 +731,7 @@ async function loadTeacherActivities() {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/activities/" +
+            "https://learning-platform-share-production.up.railway.app/api/activities/" +
             encodeURIComponent(username)
         );
 
@@ -945,7 +945,7 @@ async function submitActivity(index) {
     try {
 
         const response = await fetch(
-            "http://localhost:3000/api/activities/" +
+            "https://learning-platform-share-production.up.railway.app/api/activities/" +
             activity.id +
             "/submit",
             {
@@ -1006,7 +1006,7 @@ async function loadTeacherQuiz() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/quizzes/" +
+                "https://learning-platform-share-production.up.railway.app/api/quizzes/" +
                 encodeURIComponent(username)
             );
 
@@ -1455,7 +1455,7 @@ async function saveStudentRecording() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/recordings",
+                "https://learning-platform-share-production.up.railway.app/api/recordings",
                 {
                     method: "POST",
                     body: formData
@@ -1895,7 +1895,7 @@ try {
 
     const response =
         await fetch(
-            "http://localhost:3000/api/quiz-results",
+            "https://learning-platform-share-production.up.railway.app/api/quiz-results",
             {
                 method: "POST",
 
@@ -2070,7 +2070,7 @@ async function updateStudentProgress(
 
         const response =
             await fetch(
-                "http://localhost:3000/api/progress/" +
+                "https://learning-platform-share-production.up.railway.app/api/progress/" +
                 encodeURIComponent(username)
             );
 
@@ -2099,7 +2099,7 @@ async function updateStudentProgress(
 
         const response =
             await fetch(
-                "http://localhost:3000/api/progress",
+                "https://learning-platform-share-production.up.railway.app/api/progress",
                 {
                     method: "POST",
 
@@ -2171,7 +2171,7 @@ async function updateStreak() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/progress/" +
+                "https://learning-platform-share-production.up.railway.app/api/progress/" +
                 encodeURIComponent(username)
             );
 
