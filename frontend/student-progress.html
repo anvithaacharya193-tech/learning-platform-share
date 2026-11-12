@@ -369,7 +369,7 @@ async function loadProgress() {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/progress/" +
+                "https://learning-platform-share-production.up.railway.app/api/progress/" +
                 encodeURIComponent(student)
             );
 
@@ -454,7 +454,7 @@ try {
 
     const quizResponse =
         await fetch(
-            "http://localhost:3000/api/quiz-results/" +
+            "https://learning-platform-share-production.up.railway.app/api/quiz-results/" +
             encodeURIComponent(student)
         );
 
