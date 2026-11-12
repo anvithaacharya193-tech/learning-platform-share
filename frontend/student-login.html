@@ -148,126 +148,97 @@
 
 <script>
 
-function studentLogin() {
+async function studentLogin() {
 
     const username =
-        document.getElementById("username")
-        .value
-        .trim();
+        document.getElementById("username").value.trim();
 
     const password =
-        document.getElementById("password")
-        .value;
+        document.getElementById("password").value;
 
     const message =
         document.getElementById("message");
 
-
-    // =========================
-    // CHECK EMPTY FIELDS
-    // =========================
-
     if (username === "" || password === "") {
-
         message.style.color = "red";
-
         message.innerHTML =
             "⚠️ Please enter username and password.";
-
         return;
     }
 
+    try {
 
-    // =========================
-    // GET SAVED ACCOUNTS
-    // =========================
-
-    const accounts =
-        JSON.parse(
-            localStorage.getItem("accounts")
-        ) || [];
-
-
-    // =========================
-    // FIND STUDENT ACCOUNT
-    // =========================
-
-    const account =
-        accounts.find(function(user) {
-
-            return (
-                user.username === username &&
-                user.password === password &&
-                user.role === "student"
-            );
-
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
         });
 
+        const result = await response.json();
 
-    // =========================
-    // INVALID STUDENT LOGIN
-    // =========================
+        if (!response.ok) {
+            message.style.color = "red";
+            message.innerHTML =
+                "❌ " + result.message;
+            return;
+        }
 
-    if (!account) {
+        const account = result.user;
 
-        message.style.color = "red";
-
-        message.innerHTML =
-            "❌ Invalid student username or password.";
-
-        return;
-    }
-
-
-    // =========================
-    // SAVE STUDENT SESSION
-    // =========================
-
-    sessionStorage.setItem(
-        "studentLoggedIn",
-        "true"
-    );
-
-    sessionStorage.setItem(
-        "studentUsername",
-        account.username
-    );
-
-    sessionStorage.setItem(
-        "loggedInUsername",
-        account.username
-    );
-
-    sessionStorage.setItem(
-        "loggedInRole",
-        "student"
-    );
-
-
-    // Save age if it exists.
-    // Student does NOT need to select age again.
-
-    if (account.age) {
+        if (!account || account.role !== "student") {
+            message.style.color = "red";
+            message.innerHTML =
+                "❌ Invalid student username or password.";
+            return;
+        }
 
         sessionStorage.setItem(
-            "selectedAge",
-            account.age
+            "studentLoggedIn",
+            "true"
         );
 
+        sessionStorage.setItem(
+            "studentUsername",
+            account.username
+        );
+
+        sessionStorage.setItem(
+            "loggedInUsername",
+            account.username
+        );
+
+        sessionStorage.setItem(
+            "loggedInRole",
+            "student"
+        );
+
+        if (account.age) {
+            sessionStorage.setItem(
+                "selectedAge",
+                account.age
+            );
+        }
+
+        window.location.href =
+            "learning-activities.html";
+
+    } catch (error) {
+
+        message.style.color = "red";
+        message.innerHTML =
+            "❌ Unable to connect to the server. Please try again.";
+
+        console.error("Login error:", error);
     }
-
-
-    // =========================
-    // GO DIRECTLY TO
-    // LEARNING ACTIVITIES
-    // =========================
-
-    window.location.href =
-        "learning-activities.html";
-
 }
 
 </script>
+
 
 
 </body>

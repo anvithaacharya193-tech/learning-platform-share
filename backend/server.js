@@ -61,7 +61,7 @@ const db = mysql.createConnection({
 
 db.connect((error) => {
     if (error) {
-        console.error("MySQL connection failed:", error.message);
+        console.error("MySQL connection failed:", error);
         return;
     }
 
@@ -136,11 +136,13 @@ app.post("/api/login", async (req, res) => {
     const sql = "SELECT * FROM users WHERE username = ?";
 
     db.query(sql, [username], async (error, results) => {
-        if (error) {
-            return res.status(500).json({
-                message: "Server error"
-            });
-        }
+     if (error) {
+    console.error("Login database error:", error);
+
+    return res.status(500).json({
+        message: "Server error"
+    });
+}
 
         if (results.length === 0) {
             return res.status(401).json({
@@ -1066,6 +1068,10 @@ app.get(
         );
     }
 );
+// Serve frontend files
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+// Start backend server
 app.listen(PORT, () => {
-    console.log(`Backend server running on http://localhost:${PORT}`);
+    console.log(`Backend server running on port ${PORT}`);
 });
