@@ -687,7 +687,7 @@ Quiz assigned successfully! 🎉
 
 
 <script>
-alert("JavaScript Loaded Successfully!");
+
 /* =====================================================
    VARIABLES
 ===================================================== */
@@ -702,7 +702,7 @@ let questionCount = 0;
 ===================================================== */
 
 async function studentLogin() {
-alert("Student Login Button Working!");
+
     const username = document.getElementById("studentUsername").value.trim();
     const password = document.getElementById("studentPassword").value.trim();
 
@@ -1533,8 +1533,10 @@ async function loadTeacherProgress() {
         )
     );
 
-const quizResults =
-    await quizResponse.json();
+if (!quizResponse.ok) {
+    throw new Error("Failed to load quiz results");
+}
+const quizResults = await quizResponse.json();
 
 const latestQuizResult =
     quizResults.length > 0
@@ -1768,9 +1770,12 @@ async function viewStudentRecording() {
                 "Failed to load recordings"
             );
         }
+const recordings =
+    await response.json();
 
-        const recordings =
-            await response.json();
+if (!Array.isArray(recordings)) {
+    throw new Error("Invalid recordings response");
+}
 
 
         if (recordings.length === 0) {
@@ -1840,9 +1845,14 @@ async function viewStudentRecording() {
                     "15px";
 
 
-                video.src =
-                    "https://learning-platform-share-production.up.railway.app" +
-                    recording.video_url;
+               if (!recording.video_url) {
+    console.error("Recording video URL is missing:", recording);
+    return;
+}
+
+video.src =
+    "https://learning-platform-share-production.up.railway.app" +
+    recording.video_url;
 
 
                 const title =
