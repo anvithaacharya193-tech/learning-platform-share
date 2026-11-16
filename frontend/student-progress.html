@@ -397,13 +397,34 @@ document.getElementById(
            has actually been recorded.
         */
 
-        const hasProgress =
-            Number(progress.activities_completed) > 0 ||
-            Number(progress.quiz_score) > 0 ||
-            Number(progress.last_quiz_score) > 0 ||
-            Number(progress.streak) > 0 ||
-            progress.badge !== "";
+       /* Get latest quiz result from MySQL */
 
+let latestQuizResult = null;
+
+try {
+    const quizResponse = await fetch(
+        "https://learning-platform-share-production.up.railway.app/api/quiz-results/" +
+        encodeURIComponent(student)
+    );
+
+    if (quizResponse.ok) {
+        const quizResults = await quizResponse.json();
+
+        if (Array.isArray(quizResults) && quizResults.length > 0) {
+            latestQuizResult = quizResults[0];
+        }
+    }
+} catch (error) {
+    console.error("Quiz result loading error:", error);
+}
+
+const hasProgress =
+    Number(progress.activities_completed) > 0 ||
+    Number(progress.quiz_score) > 0 ||
+    Number(progress.last_quiz_score) > 0 ||
+    Number(progress.streak) > 0 ||
+    Boolean(progress.badge) ||
+    latestQuizResult !== null;
 
         if (!hasProgress) {
 
@@ -446,43 +467,6 @@ const streak =
         progress.streak
     ) || 0;
 
-/* Get latest quiz result from MySQL */
-
-let latestQuizResult = null;
-
-try {
-
-    const quizResponse =
-        await fetch(
-            "https://learning-platform-share-production.up.railway.app/api/quiz-results/" +
-            encodeURIComponent(student)
-        );
-
-    if (quizResponse.ok) {
-
-        const quizResults =
-            await quizResponse.json();
-
-        if (
-            Array.isArray(quizResults) &&
-            quizResults.length > 0
-        ) {
-
-            latestQuizResult =
-                quizResults[0];
-
-        }
-
-    }
-
-} catch (error) {
-
-    console.error(
-        "Quiz result loading error:",
-        error
-    );
-
-}
 
 
 /* Quiz marks */
