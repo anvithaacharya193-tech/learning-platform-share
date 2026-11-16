@@ -408,12 +408,18 @@ try {
     );
 
     if (quizResponse.ok) {
-        const quizResults = await quizResponse.json();
+    const quizResults = await quizResponse.json();
 
-        if (Array.isArray(quizResults) && quizResults.length > 0) {
-            latestQuizResult = quizResults[0];
-        }
+    console.log("Quiz results received:", quizResults);
+
+    if (Array.isArray(quizResults) && quizResults.length > 0) {
+        latestQuizResult = quizResults[0];
+    } else {
+        console.log("Quiz results are not a non-empty array.");
     }
+} else {
+    console.log("Quiz API error:", quizResponse.status);
+}
 } catch (error) {
     console.error("Quiz result loading error:", error);
 }
