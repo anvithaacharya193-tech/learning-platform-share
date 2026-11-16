@@ -704,6 +704,7 @@ let mediaRecorder = null;
 let recordedChunks = [];
 let recordingStarted = false;
 let quizLockActive = false;
+      let quizFinished = false;
 /* =====================================================
    STUDENT NAME
 ===================================================== */
@@ -1850,6 +1851,8 @@ function checkAnswer(
 ===================================================== */
 
 async function finishQuiz() {
+          if (quizFinished) return;
+    quizFinished = true;
     deactivateQuizLock();
 
     /* Stop recording */
