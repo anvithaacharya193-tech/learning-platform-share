@@ -1338,7 +1338,7 @@ peopleDetectionRunning = true;
             predictions.filter(function(person) {
                 return (
                     person.class === "person" &&
-                    person.score >= 0.65
+                  person.score >= 0.40
                 );
             }).length;
 
