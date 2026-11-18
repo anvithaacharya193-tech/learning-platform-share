@@ -666,7 +666,9 @@ Start Teacher Quiz
 </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
 
 <script>
 
@@ -705,6 +707,17 @@ let recordedChunks = [];
 let recordingStarted = false;
 let quizLockActive = false;
       let quizFinished = false;
+      /* Multiple-person detection */
+
+let peopleDetectionModel = null;
+
+let multiplePeopleWarningGiven = false;
+      let multiplePeopleConsecutiveCount = 0;
+
+let peopleDetectionActive = false;
+
+let peopleDetectionInterval = null;
+      let peopleDetectionRunning = false;
 /* =====================================================
    STUDENT NAME
 ===================================================== */
@@ -1233,13 +1246,25 @@ async function startCamera() {
 
         video.srcObject =
             cameraStream;
+          /* Load AI model for detecting people */
+
+if (!peopleDetectionModel) {
+
+    document.getElementById(
+        "cameraStatus"
+    ).textContent =
+        "⏳ Loading people detection model...";
+
+    peopleDetectionModel =
+        await cocoSsd.load();
+
+}
 
 
         document.getElementById(
             "cameraStatus"
         ).textContent =
-            "✅ Camera is active. You can start the quiz.";
-
+            "✅ Camera is active. People detection is ready. You can start the quiz.";
 
         document.getElementById(
             "cameraStatus"
@@ -1278,6 +1303,134 @@ async function startCamera() {
 
     }
 }
+      /* =====================================================
+   MULTIPLE-PERSON DETECTION
+===================================================== */
+
+
+async function detectMultiplePeople() {
+
+    if (
+        !peopleDetectionActive ||
+        !peopleDetectionModel
+    ) {
+        return;
+    }
+
+    const video = document.getElementById("video");
+
+   if (!video || video.readyState < 2) {
+    peopleDetectionRunning = false;
+    return;
+}
+      if (peopleDetectionRunning) {
+    return;
+}
+
+peopleDetectionRunning = true;
+
+    try {
+
+        const predictions =
+            await peopleDetectionModel.detect(video);
+
+        const peopleCount =
+            predictions.filter(function(person) {
+                return (
+                    person.class === "person" &&
+                    person.score >= 0.65
+                );
+            }).length;
+
+        console.log("People detected:", peopleCount);
+
+        if (peopleCount >= 2) {
+
+            multiplePeopleConsecutiveCount++;
+
+            if (
+                !multiplePeopleWarningGiven &&
+                multiplePeopleConsecutiveCount >= 2
+            ) {
+
+                multiplePeopleWarningGiven = true;
+
+                alert(
+                    "⚠️ Multiple people detected! Please ensure only you are visible. If another person is detected again, your quiz will be terminated."
+                );
+
+                multiplePeopleConsecutiveCount = 0;
+
+            }
+
+            else if (
+                multiplePeopleWarningGiven &&
+                multiplePeopleConsecutiveCount >= 2
+            ) {
+
+                stopPeopleDetection();
+
+                alert(
+                    "❌ Multiple people detected again. Your quiz will now end."
+                );
+
+                finishQuiz();
+
+            }
+
+        } else {
+
+            multiplePeopleConsecutiveCount = 0;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "People detection error:",
+            error
+        );
+
+    } finally {
+
+        peopleDetectionRunning = false;
+
+    }
+
+}
+      
+function startPeopleDetection() {
+
+    if (peopleDetectionInterval) {
+        clearInterval(peopleDetectionInterval);
+    }
+
+    multiplePeopleWarningGiven = false;
+    multiplePeopleConsecutiveCount = 0;
+
+    peopleDetectionActive = true;
+
+    peopleDetectionInterval = setInterval(function() {
+        detectMultiplePeople();
+    }, 2000);
+
+}
+
+function stopPeopleDetection() {
+
+    peopleDetectionActive = false;
+
+    if (peopleDetectionInterval) {
+
+        clearInterval(peopleDetectionInterval);
+
+        peopleDetectionInterval = null;
+
+    }
+
+}
+
+
 
 function startRecording() {
 
@@ -1727,7 +1880,7 @@ function beginQuiz() {
 activateQuizLock();
 
 displayQuestion();
-
+startPeopleDetection();
 }
 
 
@@ -1853,6 +2006,7 @@ function checkAnswer(
 async function finishQuiz() {
           if (quizFinished) return;
     quizFinished = true;
+      stopPeopleDetection();
     deactivateQuizLock();
 
     /* Stop recording */
