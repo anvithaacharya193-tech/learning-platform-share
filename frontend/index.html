@@ -18,6 +18,7 @@
         }
 
     body {
+       
     margin: 0;
     min-height: 100vh;
 
@@ -31,13 +32,268 @@
 
     overflow-x: hidden;
 }
+        /* =========================
+   NAVIGATION BAR
+========================= */
+
+.navbar {
+    width: 100%;
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 10;
+}
+
+.navbar h2 {
+    color: #4f6fdc;
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #243b64;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #4f6fdc;
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+/* =========================
+   HOME / HERO SECTION
+========================= */
+
+.hero {
+    min-height: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 70px 20px;
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2,
+        #f093fb
+    );
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.hero-content p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background: white;
+    color: #5b55c7;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.hero-button:hover {
+    background: #ffe082;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 600px) {
+    .hero-content h1 {
+        font-size: 30px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+}
+
+/* =========================
+   ABOUT US SECTION
+========================= */
+
+.about-section {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 45px 30px;
+    text-align: center;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1;
+}
+
+.about-section h2 {
+    color: #4f6fdc;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    color: #444;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* =========================
+   FEATURES SECTION
+========================= */
+
+.features-section {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 40px 25px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.features-section h2 {
+    color: #4f6fdc;
+    font-size: 32px;
+    margin-bottom: 35px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.feature-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+}
+
+.feature-card h3 {
+    color: #5b55c7;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    color: #555;
+    line-height: 1.6;
+}
+
+@media (max-width: 650px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================
+   CONTACT US SECTION
+========================= */
+
+.contact-section {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 45px 25px;
+    text-align: center;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1;
+}
+
+.contact-section h2 {
+    color: #4f6fdc;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.contact-section p {
+    color: #444;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.contact-section a {
+    color: #5b55c7;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.contact-section a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    width: 100%;
+    padding: 25px 15px;
+    margin-top: 40px;
+    text-align: center;
+    background: #243b64;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.footer p {
+    margin: 8px 0;
+    font-size: 14px;
+}
 
         /* =========================
            BACKGROUND ANIMATION
         ========================= */
 
         .circle {
-            position: fixed;
+          position: absolute;
+z-index: 0;
+pointer-events: none;
 
             border-radius: 50%;
 
@@ -100,24 +356,19 @@
            MAIN CONTAINER
         ========================= */
 
-        .container {
-            position: relative;
-
-            width: 430px;
-
-            padding: 35px;
-
-            background: white;
-
-            border-radius: 25px;
-
-            box-shadow:
-                0 15px 40px rgba(0, 0, 0, 0.18);
-
-            text-align: center;
-
-            animation: formAppear 1s ease;
-        }
+       
+.container {
+    width: min(430px, 90%);
+    margin: 50px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+    text-align: center;
+    animation: formAppear 1s ease;
+    position: relative;
+    z-index: 2;
+}
 
         @keyframes formAppear {
 
@@ -288,22 +539,142 @@
             h1 {
                 font-size: 26px;
             }
+            .about-section,
+            .contact-section {
+                width: 90%;
+                padding: 30px 20px;
+            }
 
+            .features-section {
+                width: 100%;
+                padding: 30px 15px;
+            }
+
+            .navbar h2 {
+                font-size: 21px;
+            }
         }
 
     </style>
 
 </head>
 
-<body>
 
-    <!-- ANIMATED BACKGROUND -->
+    <body>
+        <div class="circle circle1"></div>
+<div class="circle circle2"></div>
+<div class="circle circle3"></div>
 
-    <div class="circle circle1"></div>
+    <!-- NAVIGATION BAR -->
 
-    <div class="circle circle2"></div>
+    <nav class="navbar">
 
-    <div class="circle circle3"></div>
+        <h2>📚 Learning Platform</h2>
+
+        <div class="nav-links">
+
+            <a href="#home">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#features">Features</a>
+            <a href="#contact">Contact Us</a>
+            <a href="#loginSection">Login</a>
+
+        </div>
+
+    </nav>
+
+<!-- HOME SECTION -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <h1>Welcome to Our Learning Platform! 📚</h1>
+
+        <p>
+            Discover a smarter, easier and more enjoyable way to learn.
+            Explore interactive activities, take quizzes and track your
+            learning progress.
+        </p>
+
+        <a href="#loginSection" class="hero-button">
+            Start Learning
+        </a>
+
+    </div>
+
+</section>
+
+  
+
+   
+
+        <!-- ABOUT US SECTION -->
+
+<section id="about" class="about-section">
+
+    <h2>About Us 💡</h2>
+
+    <p>
+        Our Learning Platform is designed to make education
+        interactive, accessible and enjoyable for students.
+        We combine learning activities, quizzes and progress
+        tracking to create a better learning experience.
+    </p>
+
+</section>
+        
+<!-- FEATURES SECTION -->
+
+<section id="features" class="features-section">
+
+    <h2>Our Features ✨</h2>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <h3>📚 Interactive Activities</h3>
+            <p>Explore interesting learning activities designed for students.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📝 Online Quizzes</h3>
+            <p>Test your knowledge through interactive quizzes.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📊 Progress Tracking</h3>
+            <p>Monitor your learning progress and celebrate achievements.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🎥 Learning Recordings</h3>
+            <p>Support learning with recorded quiz sessions.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT US SECTION -->
+
+<section id="contact" class="contact-section">
+
+    <h2>Contact Us 📩</h2>
+
+    <p>
+        Have questions or suggestions? We would love to hear from you!
+    </p>
+
+    <p>
+        Email:
+        <a href="mailto:support@learningplatform.com">
+            support@learningplatform.com
+        </a>
+    </p>
+
+</section>
 
 
     <!-- MAIN CONTAINER -->
@@ -374,6 +745,16 @@
 
     </div>
 
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <p>© 2026 Learning Platform. All Rights Reserved.</p>
+
+    <p>Learn • Explore • Achieve 🎓</p>
+
+</footer>
 
     <script>
 
